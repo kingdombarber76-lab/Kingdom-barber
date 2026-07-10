@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Service;
 use App\Models\Schedule;
 
-class KingdomBarberShopSeeder extends Seeder
+class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
