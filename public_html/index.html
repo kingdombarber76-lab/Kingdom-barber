@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#faf9f6">
+<meta name="description" content="Fabián Quintana Salón Masculino — Reservá tu turno online en Encarnación, Paraguay. Cortes, barba y coloración.">
+<title>Fabián Quintana — Salón Masculino</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header class="hdr">
+  <div class="wrap hdr-inner">
+    <div class="brand">
+      <span class="brand-name">Fabián Quintana</span>
+      <span class="brand-sub">Salón Masculino · Encarnación</span>
+    </div>
+    <nav id="nav">
+      <a href="#servicios">Servicios</a>
+      <a href="#horarios">Horarios</a>
+      <a href="#resenas">Reseñas</a>
+      <a href="#ubicacion">Ubicación</span>
+    </nav>
+    <div class="hdr-actions">
+      <button class="btn btn-dark btn-sm" onclick="openModal()">Reservar Turno</button>
+      <button class="nav-toggle" id="navToggle" onclick="toggleNav()" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero" id="inicio">
+    <div class="wrap hero-inner">
+      <div>
+        <p class="hero-eyebrow">Encarnación, Paraguay</p>
+        <h1>El corte que<br>buscabas, <em>finalmente.</em></h1>
+        <p class="hero-sub">Atención profesional, ambiente relajado y turnos online sin esperas. Reservá en segundos y llegá directo a la silla.</p>
+        <div class="status-row">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusTxt"></span>
+          <span>·</span>
+          <a href="https://www.google.com/maps/place/Fabi%C3%A1n+Quintana+Sal%C3%B3n+Masculino/@-27.3454589,-55.8610755,17z" target="_blank" rel="noopener" style="color:var(--ink3)">M43R+RH9, Encarnación</a>
+        </div>
+        <div class="hero-cta">
+          <button class="btn btn-dark btn-lg" onclick="openModal()">Reservar Turno</button>
+          <a href="#servicios" class="btn btn-outline btn-lg">Ver Servicios</a>
+        </div>
+        <div class="hero-stats">
+          <div class="h-stat"><strong>4,9 / 5</strong><span>Google</span></div>
+          <div class="h-stat"><strong>51</strong><span>Reseñas</span></div>
+          <div class="h-stat"><strong>2</strong><span>Profesionales</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hv-card">
+          <p class="hv-label">Próxima cita disponible</p>
+          <div class="hv-title" id="hvTitle">—</div>
+          <div class="hv-row"><span>Servicio</span><strong>Combo Corte + Barba</strong></div>
+          <div class="hv-row"><span>Duración</span><strong>60 min</strong></div>
+          <div class="hv-row"><span>Precio</span><strong>Gs. 100.000</strong></div>
+          <div class="hv-badge">
+            <span class="stars">★★★★★</span>
+            <span><strong>4,9</strong> · 51 reseñas en Google</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVICIOS ─── -->
+  <section class="sec" id="servicios">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Servicios y Precios</p>
+        <h2>¿Qué necesitás hoy?</h2>
+        <p>Cada turno incluye atención personalizada de principio a fin. Los precios indicados son de referencia.</p>
+      </div>
+      <div class="svc-grid reveal" id="svcGrid"></div>
+    </div>
+  </section>
+
+  <!-- ─── HORARIOS + UBICACIÓN ─── -->
+  <section class="sec sec-alt" id="horarios">
+    <div class="wrap">
+      <div class="sch-wrap">
+        <div class="reveal">
+          <div class="sec-head" style="margin-bottom:28px">
+            <p class="eyebrow">Horarios de Atención</p>
+            <h2>¿Cuándo te esperamos?</h2>
+          </div>
+          <div class="sch-table" id="schTable"></div>
+          <p class="sch-note">El día actual aparece resaltado. Los turnos se calculan automáticamente según el horario de apertura.</p>
+        </div>
+        <div class="reveal" style="padding-top:8px" id="ubicacion">
+          <p class="eyebrow">Ubicación</p>
+          <h2 style="font-family:var(--serif);font-size:1.75rem;font-weight:400;line-height:1.1;margin-bottom:16px">
+            Encontranos en el corazón de Encarnación
+          </h2>
+          <p style="font-size:.88rem;color:var(--ink2);line-height:1.7;margin-bottom:18px">
+            M43R+RH9, Encarnación 070119, Paraguay.<br>Fácil acceso con espacio de espera cómodo.
+          </p>
+          <a class="btn btn-outline btn-sm" href="https://www.google.com/maps/place/Fabi%C3%A1n+Quintana+Sal%C3%B3n+Masculino/@-27.3454589,-55.8610755,17z" target="_blank" rel="noopener">
+            Ver en Google Maps →
+          </a>
+          <div class="info-box">
+            <strong>Lunes sólo tarde</strong>
+            Los lunes el salón abre únicamente de 14:30 a 19:30. El resto de la semana (mar–sáb) hay dos turnos: mañana y tarde con pausa al mediodía.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── RESEÑAS ─── -->
+  <section class="sec" id="resenas">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Reseñas de Clientes</p>
+        <h2>Lo que dicen los que vienen</h2>
+      </div>
+      <div class="rv-stats reveal">
+        <div class="rv-stat"><strong>4,9</strong><span>Calificación</span></div>
+        <div class="rv-stat"><strong>51</strong><span>Reseñas</span></div>
+        <div class="rv-stat"><strong>2</strong><span>Profesionales</span></div>
+        <div class="rv-stat"><strong>100%</strong><span>Online</span></div>
+      </div>
+      <div class="rv-grid">
+        <article class="rv-card reveal">
+          <div class="rv-stars">★★★★★</div>
+          <p class="rv-quote">"Atención preferencial y muy profesional, con precios adecuados. La espera depende de los turnos del día, pero vale totalmente la pena. Muy recomendable."</p>
+          <p class="rv-author">Rodrigo I. · Local Guide</p>
+        </article>
+        <article class="rv-card reveal">
+          <div class="rv-stars">★★★★★</div>
+          <p class="rv-quote">"Excelente servicio y muy buena atención en todo momento."</p>
+          <p class="rv-author">Jorge A. · Google</p>
+        </article>
+        <article class="rv-card reveal">
+          <div class="rv-stars">★★★★★</div>
+          <p class="rv-quote">"Un gran lugar con dos profesionales y una señora muy agradable. Me gusta el ambiente relajado y el servicio de clase alta. Mi lugar favorito."</p>
+          <p class="rv-author">Laurentiu F. · Local Guide</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-grid">
+      <div>
+        <span class="ftr-brand-name">Fabián Quintana</span>
+        <span class="ftr-brand-sub">Salón Masculino</span>
+        <p class="ftr-desc">Cortes de precisión, arreglo de barba a navaja y atención profesional en el corazón de Encarnación.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+        </div>
+      </div>
+      <div>
+        <h4>Horarios</h4>
+        <ul class="ftr-list" id="ftrHours"></ul>
+      </div>
+      <div>
+        <h4>Ubicación</h4>
+        <address class="ftr-address">M43R+RH9<br>Encarnación 070119<br>Paraguay</address>
+        <a class="ftr-link" href="https://www.google.com/maps/place/Fabi%C3%A1n+Quintana+Sal%C3%B3n+Masculino/@-27.3454589,-55.8610755,17z" target="_blank" rel="noopener">Ver en Google Maps →</a>
+      </div>
+      <div>
+        <h4>Reservar</h4>
+        <p style="font-size:.83rem;color:var(--ink2);line-height:1.7;margin-bottom:14px">Sin llamadas, sin esperas — confirmá tu lugar en segundos.</p>
+        <button class="btn btn-dark btn-sm" onclick="openModal()">Reservar Turno</button>
+      </div>
+    </div>
+    <div class="ftr-bottom">
+      <p>© <span id="yr"></span> Fabián Quintana · Salón Masculino</p>
+      <div class="ftr-bottom-links">
+        <a href="#inicio">Inicio</a>
+        <a href="agenda.html">Acceso Personal</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── MODAL DE RESERVA ─── -->
+<div class="overlay" id="overlay" onclick="overlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-hdr">
+      <div>
+        <p class="modal-eyebrow">Reserva online</p>
+        <h3 id="modalTitle">Reservá Tu Turno</h3>
+      </div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="stepper" id="stepper"></div>
+    <div id="modalBody"></div>
+    <div class="modal-ftr" id="modalFtr">
+      <button class="btn btn-ghost btn-back" id="btnBack" onclick="stepBack()">Atrás</button>
+      <button class="btn btn-dark" id="btnNext" onclick="stepNext()">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+/* ─── INIT ─── */
+async function initSite() {
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  try {
+    await Promise.all([loadServices(), syncRemoteTurnos()]);
+  } catch (error) {
+    console.warn('No se pudo inicializar el sitio con datos remotos:', error);
+  }
+
+  renderServices();
+  renderHorarios();
+  renderStatus();
+  renderHero();
+}
+
+function renderStatus() {
+  const st = estadoSalon();
+  document.getElementById('statusDot').className = 'status-dot ' + (st.open ? 'dot-open' : 'dot-closed');
+  document.getElementById('statusTxt').textContent = st.txt;
+}
+
+function renderHero() {
+  const proxHoy = horasDisponibles(hoyIso(), 30)[0];
+  document.getElementById('hvTitle').textContent = proxHoy ? `Hoy · ${proxHoy}` : 'Ver disponibilidad';
+}
+
+function renderServices() {
+  const grid = document.getElementById('svcGrid');
+  grid.innerHTML = '';
+  CFG.servicios.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'svc-card' + (s.destacado ? ' featured' : '');
+    card.innerHTML = `
+      ${s.destacado ? '<span class="pop-badge">Más elegido</span>' : ''}
+      <span class="svc-dur">${s.dur} min</span>
+      <h3 class="svc-name">${s.nombre}</h3>
+      <p class="svc-desc">${s.desc}</p>
+      <div class="svc-foot">
+        <span class="svc-price">${s.precioOld ? `<span class="svc-old">${fmtGs(s.precioOld)}</span>` : ''}${fmtGs(s.precio)}</span>
+        <button class="btn btn-outline btn-sm" onclick="openModal('${s.id}')">Reservar</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderHorarios() {
+  const hoyDow = new Date().getDay();
+  const schTable = document.getElementById('schTable');
+  const ftrHours = document.getElementById('ftrHours');
+  schTable.innerHTML = '';
+  ftrHours.innerHTML = '';
+  DIAS.forEach((dia, dow) => {
+    const rangos = CFG.horarios[dow] || [];
+    const esHoy  = dow === hoyDow;
+    const hrsHTML = rangos.length
+      ? rangos.map(([a,b]) => `${a}–${b}`).join('<br>')
+      : '<span class="sch-closed">Cerrado</span>';
+    const row = document.createElement('div');
+    row.className = 'sch-row' + (esHoy ? ' today' : '');
+    row.innerHTML = `<span class="day">${capitalize(dia)}</span><span class="hrs">${hrsHTML}</span>`;
+    schTable.appendChild(row);
+    const li = document.createElement('li');
+    li.innerHTML = `<span${esHoy ? ' class="hl"' : ''}>${capitalize(dia)}</span><span>${rangos.length ? rangos.map(([a,b])=>`${a}–${b}`).join(' / ') : 'Cerrado'}</span>`;
+    ftrHours.appendChild(li);
+  });
+}
+
+initSite();
+
+/* ─── NAV MOBILE ─── */
+function toggleNav() {
+  const nav = document.getElementById('nav');
+  const tog = document.getElementById('navToggle');
+  nav.classList.toggle('open');
+  tog.classList.toggle('open');
+}
+
+/* ─── SCROLL REVEAL ─── */
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+  }), { threshold:.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+} else {
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('on'));
+}
+
+/* ═══════════════════════════════════════════════
+   BOOKING — máquina de estados (4 pasos)
+═══════════════════════════════════════════════ */
+const ST = { paso:1, svcId:'corte', fecha:hoyIso(), hora:null };
+const LABELS = ['Servicio','Fecha','Hora','Tus Datos'];
+
+function openModal(svcId) {
+  ST.paso = 1; ST.svcId = svcId || 'corte'; ST.fecha = hoyIso(); ST.hora = null;
+  document.getElementById('stepper').style.display = '';
+  document.getElementById('modalFtr').style.display = '';
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderModal();
+}
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function overlayClick(e) { if (e.target === document.getElementById('overlay')) closeModal(); }
+
+function renderModal() {
+  renderStepper();
+  const body = document.getElementById('modalBody');
+  body.innerHTML = '';
+  if      (ST.paso === 1) renderStep1(body);
+  else if (ST.paso === 2) renderStep2(body);
+  else if (ST.paso === 3) renderStep3(body);
+  else if (ST.paso === 4) renderStep4(body);
+  updateButtons();
+}
+
+function renderStepper() {
+  const bar = document.getElementById('stepper');
+  bar.innerHTML = '';
+  LABELS.forEach((lbl, i) => {
+    const n = i + 1;
+    const cl = n === ST.paso ? 'active' : n < ST.paso ? 'done' : '';
+    const el = document.createElement('div');
+    el.className = 'step ' + cl;
+    el.innerHTML = `<span class="sn">${n < ST.paso ? '✓' : n}</span>${lbl}`;
+    bar.appendChild(el);
+    if (i < LABELS.length - 1) {
+      const line = document.createElement('div'); line.className = 'step-line'; bar.appendChild(line);
+    }
+  });
+}
+
+/* PASO 1 — Elegir servicio */
+function renderStep1(body) {
+  body.innerHTML = '<p class="panel-label" style="font-size:.82rem;color:var(--ink2);margin-bottom:12px;font-weight:500">¿Qué servicio necesitás?</p>';
+  const opts = document.createElement('div'); opts.className = 'svc-opts'; body.appendChild(opts);
+  CFG.servicios.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'svc-opt' + (ST.svcId === s.id ? ' active' : '');
+    btn.innerHTML = `<div><div class="opt-name">${s.nombre}</div><div class="opt-meta">${s.dur} min</div></div><span class="opt-price">${fmtGs(s.precio)}</span>`;
+    btn.onclick = () => { ST.svcId = s.id; renderModal(); };
+    opts.appendChild(btn);
+  });
+}
+
+/* PASO 2 — Elegir fecha */
+function renderStep2(body) {
+  body.innerHTML = '<p class="panel-label" style="font-size:.82rem;color:var(--ink2);margin-bottom:12px;font-weight:500">¿Qué día venís?</p>';
+  const strip = document.createElement('div'); strip.className = 'date-strip'; body.appendChild(strip);
+  const hoy = new Date(); hoy.setHours(0,0,0,0);
+  for (let i = 0; i < 21; i++) {
+    const d = new Date(hoy); d.setDate(d.getDate() + i);
+    const iso = isoDate(d); const dow = d.getDay();
+    const cerrado = !(CFG.horarios[dow] || []).length;
+    const pill = document.createElement('button');
+    pill.className = 'date-pill' + (iso === ST.fecha ? ' active' : '');
+    pill.disabled = cerrado;
+    pill.innerHTML = `${i === 0 ? '<span class="dp-today"></span>' : ''}<span>${DIAS_C[dow]}</span><strong>${d.getDate()}</strong><span>${MESES[d.getMonth()].slice(0,3)}</span>`;
+    pill.onclick = () => { ST.fecha = iso; ST.hora = null; renderModal(); };
+    strip.appendChild(pill);
+  }
+  setTimeout(() => { const a = strip.querySelector('.active'); if (a) a.scrollIntoView({inline:'center',behavior:'smooth'}); }, 50);
+}

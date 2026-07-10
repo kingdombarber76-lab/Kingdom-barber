@@ -1,0 +1,29 @@
+FROM php:8.4-fpm
+
+# Instalar dependencias necesarias para Laravel
+RUN apt-get update && apt-get install -y \
+    git curl libpng-dev libonig-dev libxml2-dev zip unzip libpq-dev \
+    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+
+# Instalar Composer y Node.js
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt-get install -y nodejs
+
+WORKDIR /var/www
+COPY . .
+
+# Instalar dependencias y optimizar Laravel para producción
+RUN composer install --no-dev --optimize-autoloader
+RUN npm install && npm run build
+
+# Configurar permisos de directorios
+RUN mkdir -p storage bootstrap/cache && chown -R www-data:www-data storage bootstrap/cache
+
+# Crear script de arranque: Migra la BD, vincula storage y levanta el servidor HTTP en el puerto 8000
+RUN echo '#!/bin/sh\n\
+php artisan migrate --force\n\
+php artisan storage:link\n\
+php artisan serve --host=0.0.0.0 --port=8000' > /usr/local/bin/start.sh && chmod +x /usr/local/bin/start.sh
+
+EXPOSE 8000
+CMD ["/usr/local/bin/start.sh"]

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#faf9f6">
+<meta name="robots" content="noindex,nofollow">
+<title>Agenda — Fabián Quintana Salón Masculino</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Copiado desde public/agenda.html para cPanel docroot -->
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <span class="brand-name">Fabián Quintana</span>
+    <span class="brand-sub">Salón Masculino — Agenda</span>
+    <h2>Acceso Personal</h2>
+    <p>Ingresá tu PIN para ver y gestionar los turnos del día.</p>
+    <input class="pin-input" type="password" id="pinInput" maxlength="6" placeholder="· · · ·" inputmode="numeric" autocomplete="off">
+    <span class="pin-error" id="pinError"></span>
+    <button class="btn btn-dark" style="width:100%;padding:13px;margin-bottom:12px" onclick="verificarPin()">Ingresar</button>
+    <a href="index.html" style="font-size:.76rem;color:var(--ink3);text-decoration:underline">← Volver al sitio</a>
+  </div>
+</div>
+
+<div id="agendaPanel" style="display:none">
+  <!-- El resto del contenido interactivo (scripts) está en public/config.js -->
+  <header class="hdr">
+    <div class="wrap hdr-inner">
+      <div class="brand">
+        <span class="brand-name">Fabián Quintana</span>
+        <span class="brand-sub">Agenda del Salón</span>
+      </div>
+      <div class="hdr-actions" style="gap:10px">
+        <button class="btn btn-ghost btn-sm" onclick="exportCSV()">Exportar CSV</button>
+        <button class="btn btn-outline btn-sm" onclick="cerrarSesion()">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main style="padding-bottom:80px">
+    <div class="wrap" style="padding-top:36px">
+      <div class="agenda-header">
+        <div>
+          <h1 id="agGreeting">Buenos días, Fabián</h1>
+          <p class="fecha" id="agFecha"></p>
+        </div>
+        <div class="agenda-actions">
+          <button class="btn btn-dark btn-sm" onclick="abrirModalManual()">+ Agregar turno manual</button>
+          <a href="index.html" class="btn btn-ghost btn-sm">← Sitio público</a>
+        </div>
+      </div>
+      <div class="ag-stats" id="agStats"></div>
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-tab="hoy"    onclick="cambiarTab(this)">Hoy</button>
+        <button class="tab"        data-tab="manana"  onclick="cambiarTab(this)">Mañana</button>
+        <button class="tab"        data-tab="semana"  onclick="cambiarTab(this)">Esta semana</button>
+        <button class="tab"        data-tab="todos"   onclick="cambiarTab(this)">Todos</button>
+      </div>
+      <div id="agBody"></div>
+    </div>
+  </main>
+
+</div>
+
+<script src="config.js"></script>
+<script>
+/* The interactive agenda scripts are loaded from config.js in the repo root. */
+</script>
+</body>
+</html>
