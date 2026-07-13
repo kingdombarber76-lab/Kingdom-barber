@@ -567,7 +567,7 @@ const deleteRemoteAppointment = async id => {
   try{
 
 const data = await apiFetch(
-  `${API_BASE}/appointments/available?tenant_id=1&barber_id=1&service_id=${SERVICE_ID_MAP[servicio.id]}&date=${iso}`
+  `${API_BASE}/appointments/available?tenant_id=1&barber_id=1&service_id=${servicio.id}&date=${iso}`
 );
 
       return (data.slots || []).map(s => s.start);
