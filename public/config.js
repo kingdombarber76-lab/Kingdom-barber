@@ -162,9 +162,7 @@
 
   const fmtGs     = n  => 'Gs. ' + Number(n).toLocaleString('es-PY');
 
-  const isoDate   = d  => { const
-  y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0'); return
-  ${y}-${m}-${day}; };
+ const isoDate    = d  => { const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0'); return `${y}-${m}-${day}`; };
 
   const hoyIso    = () => isoDate(new Date());
 
@@ -172,7 +170,7 @@
 
   const hm2min    = hm => { const [h,m]=hm.split(':').map(Number); return h*60+m; };
 
-  const min2hm    = m  => ${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')};
+  const min2hm     = m  => `${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`;
 
   const capitalize= s  => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -180,10 +178,9 @@
 
   const getSvc    = id => CFG.servicios.find(s => s.id === id) || CFG.servicios[0];
 
-  const dateLabel = iso => { const d=fromIso(iso); return ${capitalize(DIAS[d.getDay()])} ${d.getDate()} de
-  ${MESES[d.getMonth()]}; };
+  const dateLabel  = iso => { const d=fromIso(iso); return `${capitalize(DIAS[d.getDay()])} ${d.getDate()} de${MESES[d.getMonth()]}`; };
 
-  const dateShort = iso => { const d=fromIso(iso); return ${DIAS_C[d.getDay()]} ${d.getDate()}; };
+  const dateShort  = iso => { const d=fromIso(iso); return `${DIAS_C[d.getDay()]}${d.getDate()}`; };
 
   const API_BASE = 'https://kingdombarber-8x9bs.sevalla.app/api';
 
@@ -218,7 +215,7 @@
 
     if (!res.ok) {
 
-  const error = new Error(`${res.status} ${res.statusText}`);
+  const error = new Error(`${res.status}${res.statusText}`);
 
   error.status = res.status;
 
@@ -313,8 +310,8 @@
   });
 
   const loadServices = async () => {
-    try {
-      const response = await apiFetch(${API_BASE}/services);
+  try {
+    const response = await apiFetch(`${API_BASE}/services`);
       const services = Array.isArray(response) ? response : (response?.data ?? []);
       if (services.length) {
         CFG.servicios = services.map(s => ({
@@ -332,42 +329,28 @@
     }
   };
 
-  const createRemoteTurno = async turno => {
+const createRemoteTurno = async turno => {
+  const data = await apiFetch(`${API_BASE}/appointments`, {
+    method: 'POST',
+    body: JSON.stringify(mapToApiAppointment(turno)),
+  });
+  return normalizeAppointment(data.appointment ?? data);
+};
 
-    const data = await apiFetch(${API_BASE}/appointments, {
+const updateRemoteAppointmentStatus = async (id, status) => {
+  await apiFetch(`${API_BASE}/appointments/${id}/status`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status }),
+  });
+};
 
-  method: 'POST',
-
-  body: JSON.stringify(mapToApiAppointment(turno)),
-    });
-
-    return normalizeAppointment(data.appointment ?? data);
-
-  };
-
-  const updateRemoteAppointmentStatus = async (id, status) => {
-
-    await apiFetch(${API_BASE}/appointments/${id}/status, {
-
-  method: 'PATCH',
-
-  body: JSON.stringify({ status }),
-    });
-
-  };
-
-  const deleteRemoteAppointment = async id => {
-
-    const res = await fetch(${API_BASE}/appointments/${id}, {
-
-  method: 'DELETE',
-
-  credentials: 'same-origin',
-    });
-
-    if (!res.ok) throw new Error(Delete failed: ${res.status});
-
-  };
+const deleteRemoteAppointment = async id => {
+  const res = await fetch(`${API_BASE}/appointments/${id}`, {
+    method: 'DELETE',
+    credentials: 'same-origin',
+  });
+  if (!res.ok) throw new Error(`Delete failed: ${res.status}`);
+};
 
   const saveRemoteTurno = remote => {
 
@@ -399,11 +382,11 @@
 
   };
 
-  const fetchRemoteTurnos = async () => {
-    const response = await apiFetch(${API_BASE}/appointments);
-    const items = Array.isArray(response) ? response : (response?.data ?? []);
-    return items.map(normalizeAppointment);
-  };
+ const fetchRemoteTurnos = async () => {
+  const response = await apiFetch(`${API_BASE}/appointments`);
+  const items = Array.isArray(response) ? response : (response?.data ?? []);
+  return items.map(normalizeAppointment);
+};
 
   const syncRemoteTurnos = async () => {
 
@@ -583,12 +566,9 @@
 
   try{
 
-      const data = await apiFetch(
-
-
+const data = await apiFetch(
   `${API_BASE}/appointments/available?tenant_id=1&barber_id=1&service_id=${SERVICE_ID_MAP[servicio.id]}&date=${iso}`
-
-      );
+);
 
       return (data.slots || []).map(s => s.start);
 
@@ -624,7 +604,7 @@
 
     const prox = rangos.find(([a]) => hm2min(a) > min);
 
-    if (prox) return { open: false, txt: Cerrado · abre a las ${prox[0]} };
+if (prox) return { open: false, txt: `Cerrado · abre a las ${prox[0]}` };
 
     return { open: false, txt: 'Cerrado por hoy' };
 
