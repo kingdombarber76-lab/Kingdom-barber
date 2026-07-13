@@ -103,6 +103,7 @@
 
   <script src="config.js"></script>
   <script>
+ <script>
   /* ─── LOGIN ─── */
   document.getElementById('pinInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') verificarPin();
@@ -134,11 +135,9 @@
     await Promise.all([syncRemoteTurnos(), loadServices()]);
     const ahora = new Date();
     const hora  = ahora.getHours();
-    const saludo greet = hora < 13 ? 'Buenos días' : hora < 20 ? 'Buenas tardes' : 'Buenas noches';
-   document.getElementById('agGreeting').textContent = greet;
-    document.getElementById('agFecha').textContent =
-      capitalize(DIAS[ahora.getDay()]) + ' ' + ahora.getDate() + ' de ' + MESES[ahora.getMonth()] + ' ' +
-  ahora.getFullYear();
+    const greet = hora < 13 ? 'Buenos días' : hora < 20 ? 'Buenas tardes' : 'Buenas noches';
+    document.getElementById('agGreeting').textContent = greet;
+    document.getElementById('agFecha').textContent = capitalize(DIAS[ahora.getDay()]) + ' ' + ahora.getDate() + ' de ' + MESES[ahora.getMonth()] + ' ' + ahora.getFullYear();
     renderStats();
     renderAgenda();
   }
@@ -152,8 +151,7 @@
 
     const actHoy   = ts.filter(t => t.fecha === hoy && t.estado !== 'cancelado').length;
     const pendHoy  = ts.filter(t => t.fecha === hoy && t.estado === 'pendiente').length;
-    const semana   = ts.filter(t => { const d=fromIso(t.fecha); const dif=(d-now)/(1000*60*60*24); return
-  dif>=0&&dif<7&&t.estado!=='cancelado'; }).length;
+    const semana   = ts.filter(t => { const d=fromIso(t.fecha); const dif=(d-now)/(1000*60*60*24); return dif>=0 && dif<7 && t.estado!=='cancelado'; }).length;
     const total    = ts.filter(t => t.estado !== 'cancelado').length;
 
     document.getElementById('agStats').innerHTML = `
@@ -185,12 +183,10 @@
     let filtrado = ts;
     if      (tabActual === 'hoy')    filtrado = ts.filter(t => t.fecha === hoy);
     else if (tabActual === 'manana') filtrado = ts.filter(t => t.fecha === mañ);
-    else if (tabActual === 'semana') filtrado = ts.filter(t => { const d=fromIso(t.fecha); const
-  dif=(d-now)/(1000*60*60*24); return dif>=0&&dif<7; });
+    else if (tabActual === 'semana') filtrado = ts.filter(t => { const d=fromIso(t.fecha); const dif=(d-now)/(1000*60*60*24); return dif>=0 && dif<7; });
 
     if (!filtrado.length) {
-      body.innerHTML = '<div class="empty-agenda"><strong>Sin turnos en este período</strong>Las reservas de clientes
-  aparecerán aquí automáticamente.</div>';
+      body.innerHTML = '<div class="empty-agenda"><strong>Sin turnos en este período</strong>Las reservas de clientes aparecerán aquí automáticamente.</div>';
       return;
     }
 
@@ -198,8 +194,7 @@
     filtrado.forEach(t => { if (!grupos[t.fecha]) grupos[t.fecha] = []; grupos[t.fecha].push(t); });
     Object.keys(grupos).sort().forEach(fecha => {
       const grp = document.createElement('div'); grp.className = 'day-group';
-      grp.innerHTML = `<div class="day-title">${dateLabel(fecha)}${fecha===hoy?'<span
-  class="today-tag">Hoy</span>':''}</div>`;
+      grp.innerHTML = `<div class="day-title">${dateLabel(fecha)}${fecha===hoy?'<span class="today-tag">Hoy</span>':''}</div>`;
       grupos[fecha].forEach(t => grp.appendChild(buildTurnoCard(t)));
       body.appendChild(grp);
     });
@@ -211,11 +206,9 @@
     card.className = 'turno-card' + (t.estado === 'cancelado' ? ' cancelado' : '');
     card.id = 'tc-' + t.id;
 
-    const sbClass = { pendiente:'sb-pendiente', confirmado:'sb-confirmado', atendido:'sb-atendido',
-  cancelado:'sb-cancelado' }[t.estado] || 'sb-pendiente';
+    const sbClass = { pendiente:'sb-pendiente', confirmado:'sb-confirmado', atendido:'sb-atendido', cancelado:'sb-cancelado' }[t.estado] || 'sb-pendiente';
     const telLimpio = t.tel.replace(/\D/g,'');
-    const waMsg = encodeURIComponent(`Hola ${t.nombre.split(' ')[0]}, te confirmamos tu turno en Kingdom Barber
-  Shop:\n📋 *${svc.nombre}*\n📅 ${dateLabel(t.fecha)} a las ${t.hora}\n¡Te esperamos!`);
+    const waMsg = encodeURIComponent(`Hola ${t.nombre.split(' ')[0]}, te confirmamos tu turno en Kingdom Barber Shop:\n📋 *${svc.nombre}*\n📅 ${dateLabel(t.fecha)} a las ${t.hora}\n¡Te esperamos!`);
 
     card.innerHTML = `
       <div class="tc-time"><strong>${t.hora}</strong><span>${t.dur}min</span></div>
@@ -243,14 +236,12 @@
       b += `<button class="btn btn-ghost btn-sm" onclick="cambiarEstado('${t.id}','confirmado')">Confirmar</button>`;
     if (t.estado !== 'atendido')
       b += `<button class="btn btn-ghost btn-sm" onclick="cambiarEstado('${t.id}','atendido')">Atendido</button>`;
-    b += `<button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:#e8b4b4"
-  onclick="cancelar('${t.id}')">Cancelar</button>`;
+    b += `<button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:#e8b4b4" onclick="cancelar('${t.id}')">Cancelar</button>`;
     return b;
   }
 
   async function cambiarEstado(id, estado) { await updateTurno(id, { estado }); renderAgenda(); }
-  async function cancelar(id) { if (confirm('¿Cancelar este turno?')) { await updateTurno(id, { estado:'cancelado' });
-  renderAgenda(); } }
+  async function cancelar(id) { if (confirm('¿Cancelar este turno?')) { await updateTurno(id, { estado:'cancelado' }); renderAgenda(); } }
   async function eliminar(id) { if (confirm('¿Eliminar permanentemente?')) { await deleteTurno(id); renderAgenda(); } }
 
   /* ─── MODAL MANUAL ─── */
@@ -260,30 +251,24 @@
     document.body.style.overflow = 'hidden';
     const svcOpts = CFG.servicios.map(s => `<option value="${s.id}">${s.nombre} (${s.dur}min)</option>`).join('');
     document.getElementById('modalBody').innerHTML = `
-      <div class="field"><label>Nombre del cliente *</label><input id="mNombre" type="text" placeholder="Nombre
-  completo"></div>
+      <div class="field"><label>Nombre del cliente *</label><input id="mNombre" type="text" placeholder="Nombre completo"></div>
       <div class="field-row">
         <div class="field"><label>Teléfono</label><input id="mTel" type="tel" placeholder="0981 ..."></div>
       </div>
       <div class="field"><label>Servicio *</label>
-        <select id="mSvc" style="border:1px solid var(--line);border-radius:var(--r);padding:11px
-  14px;font-family:var(--sans);font-size:.9rem;color:var(--ink);background:var(--white)">${svcOpts}</select>
+        <select id="mSvc" style="border:1px solid var(--line);border-radius:var(--r);padding:11px 14px;font-family:var(--sans);font-size:.9rem;color:var(--ink);background:var(--white)">${svcOpts}</select>
       </div>
       <div class="field-row">
         <div class="field"><label>Fecha *</label><input id="mFecha" type="date" min="${hoyIso()}"></div>
-        <div class="field" id="mHoraWrap"><label>Hora *</label><select id="mHora" style="border:1px solid
-  var(--line);border-radius:var(--r);padding:11px
-  14px;font-family:var(--sans);font-size:.9rem;color:var(--ink);background:var(--white)"><option value="">— elegí fecha
-  primero —</option></select></div>
+        <div class="field" id="mHoraWrap"><label>Hora *</label><select id="mHora" style="border:1px solid var(--line);border-radius:var(--r);padding:11px 14px;font-family:var(--sans);font-size:.9rem;color:var(--ink);background:var(--white)"><option value="">— elegí fecha primero —</option></select></div>
       </div>
-      <div class="field"><label>Nota (opcional)</label><textarea id="mNota"
-  placeholder="Observaciones…"></textarea></div>`;
+      <div class="field"><label>Nota (opcional)</label><textarea id="mNota" placeholder="Observaciones…"></textarea></div>`;
     document.getElementById('mFecha').value = hoyIso();
-   0();
     document.getElementById('mSvc').addEventListener('change', actualizarHorasManual);
     document.getElementById('mFecha').addEventListener('change', actualizarHorasManual);
     actualizarHorasManual();
   }
+
   function actualizarHorasManual() {
     const svcId = document.getElementById('mSvc').value;
     const fecha = document.getElementById('mFecha').value;
@@ -295,6 +280,7 @@
       ? horas.map(h=>`<option value="${h}">${h}</option>`).join('')
       : '<option value="">Sin disponibilidad ese día</option>';
   }
+
   async function guardarManual() {
     const nombre = document.getElementById('mNombre').value.trim();
     const tel    = document.getElementById('mTel').value.trim();
@@ -306,8 +292,7 @@
     const svc = getSvc(svcId);
     if (!slotDisponible(fecha, hm2min(hora), svc.dur)) { alert('Ese horario no está disponible.'); return; }
 
-    const turno = { id:uid(), svcId, nombre, tel, nota, fecha, hora, dur:svc.dur, estado:'confirmado', creadoEn:new
-  Date().toISOString() };
+    const turno = { id:uid(), svcId, nombre, tel, nota, fecha, hora, dur:svc.dur, estado:'confirmado', creadoEn:new Date().toISOString() };
     try {
       const remote = await createRemoteTurno(turno);
       addTurno(remote);
@@ -318,10 +303,12 @@
       alert('No se pudo guardar el turno en el servidor. Intentá de nuevo.');
     }
   }
+
   function closeModal() {
     document.getElementById('overlay').classList.remove('open');
     document.body.style.overflow = '';
   }
+
   function overlayClick(e) { if (e.target.id === 'overlay') closeModal(); }
 
   /* ─── EXPORTAR CSV ─── */
@@ -344,5 +331,3 @@
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   </script>
-  </body>
-  </html>
