@@ -318,86 +318,75 @@
 
   /* PASO 1 — Elegir servicio */
   function renderStep1(body) {
-    body.innerHTML = '<p class="panel-label"
-  style="font-size:.82rem;color:var(--ink2);margin-bottom:12px;font-weight:500">¿Qué servicio necesitás?</p>';
-    const opts = document.createElement('div'); opts.className = 'svc-opts'; body.appendChild(opts);
-    CFG.servicios.forEach(s => {
-      const btn = document.createElement('button');
-      btn.className = 'svc-opt' + (ST.svcId === s.id ? ' active' : '');
-      btn.innerHTML = `<div><div class="opt-name">${s.nombre}</div><div class="opt-meta">${s.dur} min</div></div><span
-  class="opt-price">${fmtGs(s.precio)}</span>`;
-      btn.onclick = () => { ST.svcId = s.id; renderModal(); };
-      opts.appendChild(btn);
-    });
-  }
+  body.innerHTML = '<p class="panel-label" style="font-size:.82rem;color:var(--ink2);margin-bottom:12px;font-weight:500">¿Qué servicio necesitás?</p>';
+  const opts = document.createElement('div'); opts.className = 'svc-opts'; body.appendChild(opts);
+  CFG.servicios.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'svc-opt' + (ST.svcId === s.id ? ' active' : '');
+    btn.innerHTML = `<div><div class="opt-name">${s.nombre}</div><div class="opt-meta">${s.dur} min</div></div><span class="opt-price">${fmtGs(s.precio)}</span>`;
+    btn.onclick = () => { ST.svcId = s.id; renderModal(); };
+    opts.appendChild(btn);
+  });
+}
 
   /* PASO 2 — Elegir fecha */
   function renderStep2(body) {
-    body.innerHTML = '<p class="panel-label"
-  style="font-size:.82rem;color:var(--ink2);margin-bottom:12px;font-weight:500">¿Qué día venís?</p>';
-    const strip = document.createElement('div'); strip.className = 'date-strip'; body.appendChild(strip);
-    const hoy = new Date(); hoy.setHours(0,0,0,0);
-    for (let i = 0; i < 21; i++) {
-      const d = new Date(hoy); d.setDate(d.getDate() + i);
-      const iso = isoDate(d); const dow = d.getDay();
-      const cerrado = !(CFG.horarios[dow] || []).length;
-      const pill = document.createElement('button');
-      pill.className = 'date-pill' + (iso === ST.fecha ? ' active' : '');
-      pill.disabled = cerrado;
-      pill.innerHTML = `${i === 0 ? '<span class="dp-today"></span>' :
-  ''}<span>${DIAS_C[dow]}</span><strong>${d.getDate()}</strong><span>${MESES[d.getMonth()].slice(0,3)}</span>`;
-      pill.onclick = () => { ST.fecha = iso; ST.hora = null; renderModal(); };
-      strip.appendChild(pill);
-    }
-    setTimeout(() => { const a = strip.querySelector('.active'); if (a)
-  a.scrollIntoView({inline:'center',behavior:'smooth'}); }, 50);
+  body.innerHTML = '<p class="panel-label" style="font-size:.82rem;color:var(--ink2);margin-bottom:12px;font-weight:500">¿Qué día venís?</p>';
+  const strip = document.createElement('div'); strip.className = 'date-strip'; body.appendChild(strip);
+  const hoy = new Date(); hoy.setHours(0,0,0,0);
+  for (let i = 0; i < 21; i++) {
+    const d = new Date(hoy); d.setDate(d.getDate() + i);
+    const iso = isoDate(d); const dow = d.getDay();
+    const cerrado = !(CFG.horarios[dow] || []).length;
+    const pill = document.createElement('button');
+    pill.className = 'date-pill' + (iso === ST.fecha ? ' active' : '');
+    pill.disabled = cerrado;
+    pill.innerHTML = `${i === 0 ? '<span class="dp-today"></span>' : ''}<span>${DIAS_C[dow]}</span><strong>${d.getDate()}</strong><span>${MESES[d.getMonth()].slice(0,3)}</span>`;
+    pill.onclick = () => { ST.fecha = iso; ST.hora = null; renderModal(); };
+    strip.appendChild(pill);
   }
+  setTimeout(() => { const a = strip.querySelector('.active'); if (a) a.scrollIntoView({inline:'center',behavior:'smooth'}); }, 50);
+}
 
   /* PASO 3 — Elegir hora */
-  async function renderStep3(body) { // <-- Se agregó 'async' correctamente aquí
-    const svc   = getSvc(ST.svcId);
-    const horas = await horasDisponibles(ST.fecha, svc.dur);
-    body.innerHTML = `<p class="panel-label"
-  style="font-size:.82rem;color:var(--ink2);margin-bottom:4px;font-weight:500">Horarios disponibles ·
-  ${dateLabel(ST.fecha)}</p>`;
-    if (!horas.length) {
-      body.innerHTML += '<div class="no-slots">No hay turnos disponibles.<br>Por favor elegí otra fecha.</div>';
-      return;
-    }
-    body.innerHTML += '<p class="time-legend"><span class="tl-dot"></span>Horarios tachados ya están reservados</p>';
-    const tg = document.createElement('div'); tg.className = 'time-grid'; body.appendChild(tg);
-    bloquesDelDia(ST.fecha).forEach(min => {
-      const hm = min2hm(min); const libre = horas.includes(hm);
-      const btn = document.createElement('button');
-      btn.className = 't-slot' + (ST.hora === hm ? ' active' : '');
-      btn.textContent = hm; btn.disabled = !libre;
-      if (libre) btn.onclick = () => { ST.hora = hm; renderModal(); };
-      tg.appendChild(btn);
-    });
+ async function renderStep3(body) {
+  const svc   = getSvc(ST.svcId);
+  const horas = await horasDisponibles(ST.fecha, svc.dur);
+  body.innerHTML = `<p class="panel-label" style="font-size:.82rem;color:var(--ink2);margin-bottom:4px;font-weight:500">Horarios disponibles · ${dateLabel(ST.fecha)}</p>`;
+  if (!horas.length) {
+    body.innerHTML += '<div class="no-slots">No hay turnos disponibles.<br>Por favor elegí otra fecha.</div>';
+    return;
   }
+  body.innerHTML += '<p class="time-legend"><span class="tl-dot"></span>Horarios tachados ya están reservados</p>';
+  const tg = document.createElement('div'); tg.className = 'time-grid'; body.appendChild(tg);
+  bloquesDelDia(ST.fecha).forEach(min => {
+    const hm = min2hm(min); const libre = horas.includes(hm);
+    const btn = document.createElement('button');
+    btn.className = 't-slot' + (ST.hora === hm ? ' active' : '');
+    btn.textContent = hm; btn.disabled = !libre;
+    if (libre) btn.onclick = () => { ST.hora = hm; renderModal(); };
+    tg.appendChild(btn);
+  });
+}
 
   /* PASO 4 — Datos personales */
   function renderStep4(body) {
-    const svc = getSvc(ST.svcId);
-    body.innerHTML = `
-      <div class="summary-box">
-        <div class="sum-row"><span>Servicio</span><strong>${svc.nombre}</strong></div>
-        <div class="sum-row"><span>Fecha</span><strong>${dateLabel(ST.fecha)}</strong></div>
-        <div class="sum-row"><span>Hora</span><strong>${ST.hora}</strong></div>
-        <div class="sum-row"><span>Total estimado</span><strong>${fmtGs(svc.precio)}</strong></div>
-      </div>
-      <div class="field"><label>Nombre completo *</label><input id="fNombre" type="text" placeholder="Tu nombre"
-  autocomplete="name"></div>
-      <div class="field-row">
-        <div class="field"><label>Teléfono *</label><input id="fTel" type="tel" placeholder="0981 ..."
-  autocomplete="tel"></div>
-      </div>
-      <div class="field"><label>Nota para el barbero (opcional)</label><textarea id="fNota" placeholder="Ej: degradado
-  suave, no usar máquina al tope…"></textarea></div>`;
-    document.getElementById('fNombre').addEventListener('input', updateButtons);
-    document.getElementById('fTel').addEventListener('input', updateButtons);
-  }
-
+  const svc = getSvc(ST.svcId);
+  body.innerHTML = `
+    <div class="summary-box">
+      <div class="sum-row"><span>Servicio</span><strong>${svc.nombre}</strong></div>
+      <div class="sum-row"><span>Fecha</span><strong>${dateLabel(ST.fecha)}</strong></div>
+      <div class="sum-row"><span>Hora</span><strong>${ST.hora}</strong></div>
+      <div class="sum-row"><span>Total estimado</span><strong>${fmtGs(svc.precio)}</strong></div>
+    </div>
+    <div class="field"><label>Nombre completo *</label><input id="fNombre" type="text" placeholder="Tu nombre" autocomplete="name"></div>
+    <div class="field-row">
+      <div class="field"><label>Teléfono *</label><input id="fTel" type="tel" placeholder="0981 ..." autocomplete="tel"></div>
+    </div>
+    <div class="field"><label>Nota para el barbero (opcional)</label><textarea id="fNota" placeholder="Ej: degradado suave, no usar máquina al tope…"></textarea></div>`;
+  document.getElementById('fNombre').addEventListener('input', updateButtons);
+  document.getElementById('fTel').addEventListener('input', updateButtons);
+}
   function updateButtons() {
     const back = document.getElementById('btnBack');
     const next = document.getElementById('btnNext');
@@ -472,10 +461,9 @@
         return;
       }
 
-      if (!error.status || error.status >= 500) {
+     if (!error.status || error.status >= 500) {
         console.warn('No se pudo enviar la reserva al servidor:', error);
-        alert('Turno guardado localmente, pero no se pudo sincronizar al servidor. Verificá tu conexión y volvé a cargar
-  la página.');
+        alert('Turno guardado localmente, pero no se pudo sincronizar al servidor. Verificá tu conexión y volvé a cargar la página.');
         renderConfirm(turno, svc, nombre);
         return;
       }
