@@ -1,354 +1,323 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#faf9f6">
-<meta name="description" content="Fabián Quintana Salón Masculino — Reservá tu turno online en Encarnación, Paraguay. Cortes, barba y coloración.">
-<title>Fabián Quintana — Salón Masculino</title>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
+● <!DOCTYPE html>
+  <html lang="es">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#faf9f6">
+  <meta name="description" content="Kingdom Barber Shop — Reservá tu turno online en Encarnación, Paraguay. Cortes,
+  servicio completo y fade freestyle.">
+  <title>Kingdom Barber Shop — Barbería</title>
+  <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
 
-<!-- ─── HEADER ─── -->
-<header class="hdr">
-  <div class="wrap hdr-inner">
-    <div class="brand">
-      <span class="brand-name">Fabián Quintana</span>
-      <span class="brand-sub">Salón Masculino · Encarnación</span>
-    </div>
-    <nav id="nav">
-      <a href="#servicios">Servicios</a>
-      <a href="#horarios">Horarios</a>
-      <a href="#resenas">Reseñas</a>
-      <a href="#ubicacion">Ubicación</span>
-    </nav>
-    <div class="hdr-actions">
-      <button class="btn btn-dark btn-sm" onclick="openModal()">Reservar Turno</button>
-      <button class="nav-toggle" id="navToggle" onclick="toggleNav()" aria-label="Menú">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</header>
-
-<main>
-
-  <!-- ─── HERO ─── -->
-  <section class="hero" id="inicio">
-    <div class="wrap hero-inner">
-      <div>
-        <p class="hero-eyebrow">Encarnación, Paraguay</p>
-        <h1>El corte que<br>buscabas, <em>finalmente.</em></h1>
-        <p class="hero-sub">Atención profesional, ambiente relajado y turnos online sin esperas. Reservá en segundos y llegá directo a la silla.</p>
-        <div class="status-row">
-          <span class="status-dot" id="statusDot"></span>
-          <span id="statusTxt"></span>
-          <span>·</span>
-          <a href="https://www.google.com/maps/place/Fabi%C3%A1n+Quintana+Sal%C3%B3n+Masculino/@-27.3454589,-55.8610755,17z" target="_blank" rel="noopener" style="color:var(--ink3)">M43R+RH9, Encarnación</a>
-        </div>
-        <div class="hero-cta">
-          <button class="btn btn-dark btn-lg" onclick="openModal()">Reservar Turno</button>
-          <a href="#servicios" class="btn btn-outline btn-lg">Ver Servicios</a>
-        </div>
-        <div class="hero-stats">
-          <div class="h-stat"><strong>4,9 / 5</strong><span>Google</span></div>
-          <div class="h-stat"><strong>51</strong><span>Reseñas</span></div>
-          <div class="h-stat"><strong>2</strong><span>Profesionales</span></div>
-        </div>
+  <!-- ─── HEADER ─── -->
+  <header class="hdr">
+    <div class="wrap hdr-inner">
+      <div class="brand">
+        <span class="brand-name">Kingdom Barber Shop</span>
+        <span class="brand-sub">Barbería · Encarnación</span>
       </div>
-      <div class="hero-visual">
-        <div class="hv-card">
-          <p class="hv-label">Próxima cita disponible</p>
-          <div class="hv-title" id="hvTitle">—</div>
-          <div class="hv-row"><span>Servicio</span><strong>Combo Corte + Barba</strong></div>
-          <div class="hv-row"><span>Duración</span><strong>60 min</strong></div>
-          <div class="hv-row"><span>Precio</span><strong>Gs. 100.000</strong></div>
-          <div class="hv-badge">
-            <span class="stars">★★★★★</span>
-            <span><strong>4,9</strong> · 51 reseñas en Google</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── SERVICIOS ─── -->
-  <section class="sec" id="servicios">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <p class="eyebrow">Servicios y Precios</p>
-        <h2>¿Qué necesitás hoy?</h2>
-        <p>Cada turno incluye atención personalizada de principio a fin. Los precios indicados son de referencia.</p>
-      </div>
-      <div class="svc-grid reveal" id="svcGrid"></div>
-    </div>
-  </section>
-
-  <!-- ─── HORARIOS + UBICACIÓN ─── -->
-  <section class="sec sec-alt" id="horarios">
-    <div class="wrap">
-      <div class="sch-wrap">
-        <div class="reveal">
-          <div class="sec-head" style="margin-bottom:28px">
-            <p class="eyebrow">Horarios de Atención</p>
-            <h2>¿Cuándo te esperamos?</h2>
-          </div>
-          <div class="sch-table" id="schTable"></div>
-          <p class="sch-note">El día actual aparece resaltado. Los turnos se calculan automáticamente según el horario de apertura.</p>
-        </div>
-        <div class="reveal" style="padding-top:8px" id="ubicacion">
-          <p class="eyebrow">Ubicación</p>
-          <h2 style="font-family:var(--serif);font-size:1.75rem;font-weight:400;line-height:1.1;margin-bottom:16px">
-            Encontranos en el corazón de Encarnación
-          </h2>
-          <p style="font-size:.88rem;color:var(--ink2);line-height:1.7;margin-bottom:18px">
-            M43R+RH9, Encarnación 070119, Paraguay.<br>Fácil acceso con espacio de espera cómodo.
-          </p>
-          <a class="btn btn-outline btn-sm" href="https://www.google.com/maps/place/Fabi%C3%A1n+Quintana+Sal%C3%B3n+Masculino/@-27.3454589,-55.8610755,17z" target="_blank" rel="noopener">
-            Ver en Google Maps →
-          </a>
-          <div class="info-box">
-            <strong>Lunes sólo tarde</strong>
-            Los lunes el salón abre únicamente de 14:30 a 19:30. El resto de la semana (mar–sáb) hay dos turnos: mañana y tarde con pausa al mediodía.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── RESEÑAS ─── -->
-  <section class="sec" id="resenas">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <p class="eyebrow">Reseñas de Clientes</p>
-        <h2>Lo que dicen los que vienen</h2>
-      </div>
-      <div class="rv-stats reveal">
-        <div class="rv-stat"><strong>4,9</strong><span>Calificación</span></div>
-        <div class="rv-stat"><strong>51</strong><span>Reseñas</span></div>
-        <div class="rv-stat"><strong>2</strong><span>Profesionales</span></div>
-        <div class="rv-stat"><strong>100%</strong><span>Online</span></div>
-      </div>
-      <div class="rv-grid">
-        <article class="rv-card reveal">
-          <div class="rv-stars">★★★★★</div>
-          <p class="rv-quote">"Atención preferencial y muy profesional, con precios adecuados. La espera depende de los turnos del día, pero vale totalmente la pena. Muy recomendable."</p>
-          <p class="rv-author">Rodrigo I. · Local Guide</p>
-        </article>
-        <article class="rv-card reveal">
-          <div class="rv-stars">★★★★★</div>
-          <p class="rv-quote">"Excelente servicio y muy buena atención en todo momento."</p>
-          <p class="rv-author">Jorge A. · Google</p>
-        </article>
-        <article class="rv-card reveal">
-          <div class="rv-stars">★★★★★</div>
-          <p class="rv-quote">"Un gran lugar con dos profesionales y una señora muy agradable. Me gusta el ambiente relajado y el servicio de clase alta. Mi lugar favorito."</p>
-          <p class="rv-author">Laurentiu F. · Local Guide</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- ─── FOOTER ─── -->
-<footer class="ftr">
-  <div class="wrap">
-    <div class="ftr-grid">
-      <div>
-        <span class="ftr-brand-name">Fabián Quintana</span>
-        <span class="ftr-brand-sub">Salón Masculino</span>
-        <p class="ftr-desc">Cortes de precisión, arreglo de barba a navaja y atención profesional en el corazón de Encarnación.</p>
-        <div class="social-links">
-          <a href="#" aria-label="Instagram">IG</a>
-          <a href="#" aria-label="Facebook">FB</a>
-        </div>
-      </div>
-      <div>
-        <h4>Horarios</h4>
-        <ul class="ftr-list" id="ftrHours"></ul>
-      </div>
-      <div>
-        <h4>Ubicación</h4>
-        <address class="ftr-address">M43R+RH9<br>Encarnación 070119<br>Paraguay</address>
-        <a class="ftr-link" href="https://www.google.com/maps/place/Fabi%C3%A1n+Quintana+Sal%C3%B3n+Masculino/@-27.3454589,-55.8610755,17z" target="_blank" rel="noopener">Ver en Google Maps →</a>
-      </div>
-      <div>
-        <h4>Reservar</h4>
-        <p style="font-size:.83rem;color:var(--ink2);line-height:1.7;margin-bottom:14px">Sin llamadas, sin esperas — confirmá tu lugar en segundos.</p>
+      <nav id="nav">
+        <a href="#servicios">Servicios</a>
+        <a href="#horarios">Horarios</a>
+        <a href="#ubicacion">Ubicación</a>
+      </nav>
+      <div class="hdr-actions">
         <button class="btn btn-dark btn-sm" onclick="openModal()">Reservar Turno</button>
+        <button class="nav-toggle" id="navToggle" onclick="toggleNav()" aria-label="Menú">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
-    <div class="ftr-bottom">
-      <p>© <span id="yr"></span> Fabián Quintana · Salón Masculino</p>
-      <div class="ftr-bottom-links">
-        <a href="#inicio">Inicio</a>
-        <a href="agenda.html">Acceso Personal</a>
+  </header>
+
+  <main>
+
+    <!-- ─── HERO ─── -->
+    <section class="hero" id="inicio">
+      <div class="wrap hero-inner">
+        <div>
+          <p class="hero-eyebrow">Encarnación, Paraguay</p>
+          <h1>El corte que<br>buscabas, <em>finalmente.</em></h1>
+          <p class="hero-sub">Atención profesional, ambiente relajado y turnos online sin esperas. Reservá en segundos y
+  llegá directo a la silla.</p>
+          <div class="status-row">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusTxt"></span>
+            <span>·</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=J4WM%2B8R+Encarnaci%C3%B3n" target="_blank"
+  rel="noopener" style="color:var(--ink3)">Av. Japón, Encarnación</a>
+          </div>
+          <div class="hero-cta">
+            <button class="btn btn-dark btn-lg" onclick="openModal()">Reservar Turno</button>
+            <a href="#servicios" class="btn btn-outline btn-lg">Ver Servicios</a>
+          </div>
+          <div class="hero-stats">
+            <div class="h-stat"><strong>Kingdom</strong><span>Barber Shop</span></div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hv-card">
+            <p class="hv-label">Próxima cita disponible</p>
+            <div class="hv-title" id="hvTitle">—</div>
+            <div class="hv-row"><span>Servicio</span><strong>Servicio completo</strong></div>
+            <div class="hv-row"><span>Duración</span><strong>60 min</strong></div>
+            <div class="hv-row"><span>Precio</span><strong>Gs. 90.000</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SERVICIOS ─── -->
+    <section class="sec" id="servicios">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="eyebrow">Servicios y Precios</p>
+          <h2>¿Qué necesitás hoy?</h2>
+          <p>Cada turno incluye atención personalizada de principio a fin. Los precios indicados son de referencia.</p>
+        </div>
+        <div class="svc-grid reveal" id="svcGrid"></div>
+      </div>
+    </section>
+
+    <!-- ─── HORARIOS + UBICACIÓN ─── -->
+    <section class="sec sec-alt" id="horarios">
+      <div class="wrap">
+        <div class="sch-wrap">
+          <div class="reveal">
+            <div class="sec-head" style="margin-bottom:28px">
+              <p class="eyebrow">Horarios de Atención</p>
+              <h2>¿Cuándo te esperamos?</h2>
+            </div>
+            <div class="sch-table" id="schTable"></div>
+            <p class="sch-note">El día actual aparece resaltado. Los turnos se calculan automáticamente según el horario
+  de apertura.</p>
+          </div>
+          <div class="reveal" style="padding-top:8px" id="ubicacion">
+            <p class="eyebrow">Ubicación</p>
+            <h2 style="font-family:var(--serif);font-size:1.75rem;font-weight:400;line-height:1.1;margin-bottom:16px">
+              Encontranos en Encarnación
+            </h2>
+            <p style="font-size:.88rem;color:var(--ink2);line-height:1.7;margin-bottom:18px">
+              Av. Japón, Encarnación 070121, Paraguay.<br>Fácil acceso con espacio de espera cómodo.
+            </p>
+            <a class="btn btn-outline btn-sm"
+  href="https://www.google.com/maps/search/?api=1&query=J4WM%2B8R+Encarnaci%C3%B3n" target="_blank" rel="noopener">
+              Ver en Google Maps →
+            </a>
+            <div class="info-box">
+              <strong>Lunes sólo tarde</strong>
+              Los lunes el salón abre únicamente de 14:00 a 19:00. El resto de la semana (mar–sáb) atendemos de 10:00 a
+  19:00 corrido.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="ftr">
+    <div class="wrap">
+      <div class="ftr-grid">
+        <div>
+          <span class="ftr-brand-name">Kingdom Barber Shop</span>
+          <span class="ftr-brand-sub">Barbería</span>
+          <p class="ftr-desc">Cortes de precisión y atención profesional en Encarnación.</p>
+          <div class="social-links">
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="Facebook">FB</a>
+          </div>
+        </div>
+        <div>
+          <h4>Horarios</h4>
+          <ul class="ftr-list" id="ftrHours"></ul>
+        </div>
+        <div>
+          <h4>Ubicación</h4>
+          <address class="ftr-address">Av. Japón<br>Encarnación 070121<br>Paraguay</address>
+          <a class="ftr-link" href="https://www.google.com/maps/search/?api=1&query=J4WM%2B8R+Encarnaci%C3%B3n"
+  target="_blank" rel="noopener">Ver en Google Maps →</a>
+        </div>
+        <div>
+          <h4>Reservar</h4>
+          <p style="font-size:.83rem;color:var(--ink2);line-height:1.7;margin-bottom:14px">Sin llamadas, sin esperas —
+  confirmá tu lugar en segundos.</p>
+          <button class="btn btn-dark btn-sm" onclick="openModal()">Reservar Turno</button>
+        </div>
+      </div>
+      <div class="ftr-bottom">
+        <p>© <span id="yr"></span> Kingdom Barber Shop</p>
+        <div class="ftr-bottom-links">
+          <a href="#inicio">Inicio</a>
+          <a href="agenda.html">Acceso Personal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── MODAL DE RESERVA ─── -->
+  <div class="overlay" id="overlay" onclick="overlayClick(event)">
+    <div class="modal" id="modal">
+      <div class="modal-hdr">
+        <div>
+          <p class="modal-eyebrow">Reserva online</p>
+          <h3 id="modalTitle">Reservá Tu Turno</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="stepper" id="stepper"></div>
+      <div id="modalBody"></div>
+      <div class="modal-ftr" id="modalFtr">
+        <button class="btn btn-ghost btn-back" id="btnBack" onclick="stepBack()">Atrás</button>
+        <button class="btn btn-dark" id="btnNext" onclick="stepNext()">Continuar</button>
       </div>
     </div>
   </div>
-</footer>
 
-<!-- ─── MODAL DE RESERVA ─── -->
-<div class="overlay" id="overlay" onclick="overlayClick(event)">
-  <div class="modal" id="modal">
-    <div class="modal-hdr">
-      <div>
-        <p class="modal-eyebrow">Reserva online</p>
-        <h3 id="modalTitle">Reservá Tu Turno</h3>
-      </div>
-      <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
-    </div>
-    <div class="stepper" id="stepper"></div>
-    <div id="modalBody"></div>
-    <div class="modal-ftr" id="modalFtr">
-      <button class="btn btn-ghost btn-back" id="btnBack" onclick="stepBack()">Atrás</button>
-      <button class="btn btn-dark" id="btnNext" onclick="stepNext()">Continuar</button>
-    </div>
-  </div>
-</div>
+  <script src="config.js"></script>
+  <script>
+  /* ─── INIT ─── */
+  async function initSite() {
+    document.getElementById('yr').textContent = new Date().getFullYear();
 
-<script src="config.js"></script>
-<script>
-/* ─── INIT ─── */
-async function initSite() {
-  document.getElementById('yr').textContent = new Date().getFullYear();
+    try {
+      await Promise.all([loadServices(), syncRemoteTurnos()]);
+    } catch (error) {
+      console.warn('No se pudo inicializar el sitio con datos remotos:', error);
+    }
 
-  try {
-    await Promise.all([loadServices(), syncRemoteTurnos()]);
-  } catch (error) {
-    console.warn('No se pudo inicializar el sitio con datos remotos:', error);
+    renderServices();
+    renderHorarios();
+    renderStatus();
+    renderHero();
   }
 
-  renderServices();
-  renderHorarios();
-  renderStatus();
-  renderHero();
-}
+  function renderStatus() {
+    const st = estadoSalon();
+    document.getElementById('statusDot').className = 'status-dot ' + (st.open ? 'dot-open' : 'dot-closed');
+    document.getElementById('statusTxt').textContent = st.txt;
+  }
 
-function renderStatus() {
-  const st = estadoSalon();
-  document.getElementById('statusDot').className = 'status-dot ' + (st.open ? 'dot-open' : 'dot-closed');
-  document.getElementById('statusTxt').textContent = st.txt;
-}
+  async function renderHero() {
+    const horas = await horasDisponibles(hoyIso(), 60);
+    document.getElementById('hvTitle').textContent = horas[0] ? `Hoy · ${horas[0]}` : 'Ver disponibilidad';
+  }
 
-function renderHero() {
-  const proxHoy = horasDisponibles(hoyIso(), 30)[0];
-  document.getElementById('hvTitle').textContent = proxHoy ? `Hoy · ${proxHoy}` : 'Ver disponibilidad';
-}
+  function renderServices() {
+    const grid = document.getElementById('svcGrid');
+    grid.innerHTML = '';
+    CFG.servicios.forEach(s => {
+      const card = document.createElement('div');
+      card.className = 'svc-card' + (s.destacado ? ' featured' : '');
+      card.innerHTML = `
+        ${s.destacado ? '<span class="pop-badge">Más elegido</span>' : ''}
+        <span class="svc-dur">${s.dur} min</span>
+        <h3 class="svc-name">${s.nombre}</h3>
+        <p class="svc-desc">${s.desc}</p>
+        <div class="svc-foot">
+          <span class="svc-price">${s.precioOld ? `<span class="svc-old">${fmtGs(s.precioOld)}</span>` :
+  ''}${fmtGs(s.precio)}</span>
+          <button class="btn btn-outline btn-sm" onclick="openModal('${s.id}')">Reservar</button>
+        </div>`;
+      grid.appendChild(card);
+    });
+  }
 
-function renderServices() {
-  const grid = document.getElementById('svcGrid');
-  grid.innerHTML = '';
-  CFG.servicios.forEach(s => {
-    const card = document.createElement('div');
-    card.className = 'svc-card' + (s.destacado ? ' featured' : '');
-    card.innerHTML = `
-      ${s.destacado ? '<span class="pop-badge">Más elegido</span>' : ''}
-      <span class="svc-dur">${s.dur} min</span>
-      <h3 class="svc-name">${s.nombre}</h3>
-      <p class="svc-desc">${s.desc}</p>
-      <div class="svc-foot">
-        <span class="svc-price">${s.precioOld ? `<span class="svc-old">${fmtGs(s.precioOld)}</span>` : ''}${fmtGs(s.precio)}</span>
-        <button class="btn btn-outline btn-sm" onclick="openModal('${s.id}')">Reservar</button>
-      </div>`;
-    grid.appendChild(card);
-  });
-}
+  function renderHorarios() {
+    const hoyDow = new Date().getDay();
+    const schTable = document.getElementById('schTable');
+    const ftrHours = document.getElementById('ftrHours');
+    schTable.innerHTML = '';
+    ftrHours.innerHTML = '';
+    DIAS.forEach((dia, dow) => {
+      const rangos = CFG.horarios[dow] || [];
+      const esHoy  = dow === hoyDow;
+      const hrsHTML = rangos.length
+        ? rangos.map(([a,b]) => `${a}–${b}`).join('<br>')
+        : '<span class="sch-closed">Cerrado</span>';
+      const row = document.createElement('div');
+      row.className = 'sch-row' + (esHoy ? ' today' : '');
+      row.innerHTML = `<span class="day">${capitalize(dia)}</span><span class="hrs">${hrsHTML}</span>`;
+      schTable.appendChild(row);
+      const li = document.createElement('li');
+      li.innerHTML = `<span${esHoy ? ' class="hl"' : ''}>${capitalize(dia)}</span><span>${rangos.length ?
+  rangos.map(([a,b])=>`${a}–${b}`).join(' / ') : 'Cerrado'}</span>`;
+      ftrHours.appendChild(li);
+    });
+  }
 
-function renderHorarios() {
-  const hoyDow = new Date().getDay();
-  const schTable = document.getElementById('schTable');
-  const ftrHours = document.getElementById('ftrHours');
-  schTable.innerHTML = '';
-  ftrHours.innerHTML = '';
-  DIAS.forEach((dia, dow) => {
-    const rangos = CFG.horarios[dow] || [];
-    const esHoy  = dow === hoyDow;
-    const hrsHTML = rangos.length
-      ? rangos.map(([a,b]) => `${a}–${b}`).join('<br>')
-      : '<span class="sch-closed">Cerrado</span>';
-    const row = document.createElement('div');
-    row.className = 'sch-row' + (esHoy ? ' today' : '');
-    row.innerHTML = `<span class="day">${capitalize(dia)}</span><span class="hrs">${hrsHTML}</span>`;
-    schTable.appendChild(row);
-    const li = document.createElement('li');
-    li.innerHTML = `<span${esHoy ? ' class="hl"' : ''}>${capitalize(dia)}</span><span>${rangos.length ? rangos.map(([a,b])=>`${a}–${b}`).join(' / ') : 'Cerrado'}</span>`;
-    ftrHours.appendChild(li);
-  });
-}
+  initSite();
 
-initSite();
+  /* ─── NAV MOBILE ─── */
+  function toggleNav() {
+    const nav = document.getElementById('nav');
+    const tog = document.getElementById('navToggle');
+    nav.classList.toggle('open');
+    tog.classList.toggle('open');
+  }
 
-/* ─── NAV MOBILE ─── */
-function toggleNav() {
-  const nav = document.getElementById('nav');
-  const tog = document.getElementById('navToggle');
-  nav.classList.toggle('open');
-  tog.classList.toggle('open');
-}
+  /* ─── SCROLL REVEAL ─── */
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+    }), { threshold:.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('on'));
+  }
 
-/* ─── SCROLL REVEAL ─── */
-if ('IntersectionObserver' in window) {
-  const io = new IntersectionObserver(entries => entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
-  }), { threshold:.12 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-} else {
-  document.querySelectorAll('.reveal').forEach(el => el.classList.add('on'));
-}
+  /* ════════════════════════════════════════════════════════
+      BOOKING — máquina de estados (4 pasos)
+  ══════════════════════════════════════════════════════ */
+  const ST = { paso:1, svcId:'corte', fecha:hoyIso(), hora:null };
+  const LABELS = ['Servicio','Fecha','Hora','Tus Datos'];
 
-/* ═══════════════════════════════════════════════
-   BOOKING — máquina de estados (4 pasos)
-═══════════════════════════════════════════════ */
-const ST = { paso:1, svcId:'corte', fecha:hoyIso(), hora:null };
-const LABELS = ['Servicio','Fecha','Hora','Tus Datos'];
+  function openModal(svcId) {
+    ST.paso = 1; ST.svcId = svcId || 'corte'; ST.fecha = hoyIso(); ST.hora = null;
+    document.getElementById('stepper').style.display = '';
+    document.getElementById('modalFtr').style.display = '';
+    document.getElementById('overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    renderModal();
+  }
+  function closeModal() {
+    document.getElementById('overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function overlayClick(e) { if (e.target === document.getElementById('overlay')) closeModal(); }
 
-function openModal(svcId) {
-  ST.paso = 1; ST.svcId = svcId || 'corte'; ST.fecha = hoyIso(); ST.hora = null;
-  document.getElementById('stepper').style.display = '';
-  document.getElementById('modalFtr').style.display = '';
-  document.getElementById('overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  renderModal();
-}
-function closeModal() {
-  document.getElementById('overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function overlayClick(e) { if (e.target === document.getElementById('overlay')) closeModal(); }
+  function renderModal() {
+    renderStepper();
+    const body = document.getElementById('modalBody');
+    body.innerHTML = '';
+    if      (ST.paso === 1) renderStep1(body);
+    else if (ST.paso === 2) renderStep2(body);
+    else if (ST.paso === 3) renderStep3(body);
+    else if (ST.paso === 4) renderStep4(body);
+    updateButtons();
+  }
 
-function renderModal() {
-  renderStepper();
-  const body = document.getElementById('modalBody');
-  body.innerHTML = '';
-  if      (ST.paso === 1) renderStep1(body);
-  else if (ST.paso === 2) renderStep2(body);
-  else if (ST.paso === 3) renderStep3(body);
-  else if (ST.paso === 4) renderStep4(body);
-  updateButtons();
-}
+  function renderStepper() {
+    const bar = document.getElementById('stepper');
+    bar.innerHTML = '';
+    LABELS.forEach((lbl, i) => {
+      const n = i + 1;
+      const cl = n === ST.paso ? 'active' : n < ST.paso ? 'done' : '';
+      const el = document.createElement('div');
+      el.className = 'step ' + cl;
+      el.innerHTML = `<span class="sn">${n < ST.paso ? '✓' : n}</span>${lbl}`;
+      bar.appendChild(el);
+      if (i < LABELS.length - 1) {
+        const line = document.createElement('div'); line.className = 'step-line'; bar.appendChild(line);
+      }
+    });
+  }
 
-function renderStepper() {
-  const bar = document.getElementById('stepper');
-  bar.innerHTML = '';
-  LABELS.forEach((lbl, i) => {
-    const n = i + 1;
-    const cl = n === ST.paso ? 'active' : n < ST.paso ? 'done' : '';
-    const el = document.createElement('div');
-    el.className = 'step ' + cl;
-    el.innerHTML = `<span class="sn">${n < ST.paso ? '✓' : n}</span>${lbl}`;
-    bar.appendChild(el);
-    if (i < LABELS.length - 1) {
-      const line = document.createElement('div'); line.className = 'step-line'; bar.appendChild(line);
-    }
-  });
-}
-
-/* PASO 1 — Elegir servicio */
-function renderStep1(body) {
+  /* PASO 1 — Elegir servicio */
+  function renderStep1(body) {
   body.innerHTML = '<p class="panel-label" style="font-size:.82rem;color:var(--ink2);margin-bottom:12px;font-weight:500">¿Qué servicio necesitás?</p>';
   const opts = document.createElement('div'); opts.className = 'svc-opts'; body.appendChild(opts);
   CFG.servicios.forEach(s => {
@@ -360,8 +329,8 @@ function renderStep1(body) {
   });
 }
 
-/* PASO 2 — Elegir fecha */
-function renderStep2(body) {
+  /* PASO 2 — Elegir fecha */
+  function renderStep2(body) {
   body.innerHTML = '<p class="panel-label" style="font-size:.82rem;color:var(--ink2);margin-bottom:12px;font-weight:500">¿Qué día venís?</p>';
   const strip = document.createElement('div'); strip.className = 'date-strip'; body.appendChild(strip);
   const hoy = new Date(); hoy.setHours(0,0,0,0);
@@ -378,3 +347,174 @@ function renderStep2(body) {
   }
   setTimeout(() => { const a = strip.querySelector('.active'); if (a) a.scrollIntoView({inline:'center',behavior:'smooth'}); }, 50);
 }
+
+  /* PASO 3 — Elegir hora */
+ async function renderStep3(body) {
+  const svc   = getSvc(ST.svcId);
+  const horas = await horasDisponibles(ST.fecha, svc.dur);
+  body.innerHTML = `<p class="panel-label" style="font-size:.82rem;color:var(--ink2);margin-bottom:4px;font-weight:500">Horarios disponibles · ${dateLabel(ST.fecha)}</p>`;
+  if (!horas.length) {
+    body.innerHTML += '<div class="no-slots">No hay turnos disponibles.<br>Por favor elegí otra fecha.</div>';
+    return;
+  }
+  body.innerHTML += '<p class="time-legend"><span class="tl-dot"></span>Horarios tachados ya están reservados</p>';
+  const tg = document.createElement('div'); tg.className = 'time-grid'; body.appendChild(tg);
+  bloquesDelDia(ST.fecha).forEach(min => {
+    const hm = min2hm(min); const libre = horas.includes(hm);
+    const btn = document.createElement('button');
+    btn.className = 't-slot' + (ST.hora === hm ? ' active' : '');
+    btn.textContent = hm; btn.disabled = !libre;
+    if (libre) btn.onclick = () => { ST.hora = hm; renderModal(); };
+    tg.appendChild(btn);
+  });
+}
+
+  /* PASO 4 — Datos personales */
+  function renderStep4(body) {
+  const svc = getSvc(ST.svcId);
+  body.innerHTML = `
+    <div class="summary-box">
+      <div class="sum-row"><span>Servicio</span><strong>${svc.nombre}</strong></div>
+      <div class="sum-row"><span>Fecha</span><strong>${dateLabel(ST.fecha)}</strong></div>
+      <div class="sum-row"><span>Hora</span><strong>${ST.hora}</strong></div>
+      <div class="sum-row"><span>Total estimado</span><strong>${fmtGs(svc.precio)}</strong></div>
+    </div>
+    <div class="field"><label>Nombre completo *</label><input id="fNombre" type="text" placeholder="Tu nombre" autocomplete="name"></div>
+    <div class="field-row">
+      <div class="field"><label>Teléfono *</label><input id="fTel" type="tel" placeholder="0981 ..." autocomplete="tel"></div>
+    </div>
+    <div class="field"><label>Nota para el barbero (opcional)</label><textarea id="fNota" placeholder="Ej: degradado suave, no usar máquina al tope…"></textarea></div>`;
+  document.getElementById('fNombre').addEventListener('input', updateButtons);
+  document.getElementById('fTel').addEventListener('input', updateButtons);
+}
+  function updateButtons() {
+    const back = document.getElementById('btnBack');
+    const next = document.getElementById('btnNext');
+    back.style.visibility = ST.paso === 1 ? 'hidden' : 'visible';
+    next.textContent = ST.paso === 4 ? 'Confirmar Reserva' : 'Continuar';
+    let ok = false;
+    if (ST.paso === 1) ok = !!ST.svcId;
+    else if (ST.paso === 2) ok = !!ST.fecha;
+    else if (ST.paso === 3) ok = !!ST.hora;
+    else if (ST.paso === 4) {
+      const n = document.getElementById('fNombre');
+      const t = document.getElementById('fTel');
+      ok = n && t && n.value.trim().length > 1 && t.value.trim().length > 5;
+    }
+    next.disabled = !ok;
+  }
+
+  function stepBack() { if (ST.paso > 1) { ST.paso--; renderModal(); } }
+  function stepNext() {
+    if (ST.paso < 4) { ST.paso++; renderModal(); }
+    else confirmarReserva();
+  }
+
+  async function confirmarReserva() {
+    const svc    = getSvc(ST.svcId);
+    const nombre = document.getElementById('fNombre').value.trim();
+    const tel    = document.getElementById('fTel').value.trim();
+    const nota   = document.getElementById('fNota').value.trim();
+    if (!nombre || !tel) return;
+
+    // Verificación anti-colisión justo antes de guardar
+    if (!slotDisponible(ST.fecha, hm2min(ST.hora), svc.dur)) {
+      alert('Ese horario acaba de reservarse. Por favor elegí otro.');
+      ST.paso = 3; renderModal(); return;
+    }
+
+    const turno = {
+      id: uid(), svcId: ST.svcId, nombre, tel, nota,
+      fecha: ST.fecha, hora: ST.hora, dur: svc.dur,
+      estado: 'pendiente', creadoEn: new Date().toISOString()
+    };
+    addTurno(turno);
+
+    try {
+      const remote = await createRemoteTurno(turno);
+      replaceTurnoId(turno.id, remote);
+      renderConfirm(remote, svc, nombre);
+    } catch (error) {
+      const apiMessage = body => {
+        if (!body) return null;
+        if (typeof body === 'string') return body;
+        if (body.message) return body.message;
+        if (body.errors) {
+          const values = Object.values(body.errors).flat();
+          return values[0] ?? null;
+        }
+        return JSON.stringify(body);
+      };
+      const detail = apiMessage(error?.body) || error?.message || 'No se pudo crear la reserva en el servidor.';
+
+      if (error.status === 409) {
+        deleteTurno(turno.id);
+        alert('Ese horario ya no está disponible. Por favor elegí otro.');
+        ST.paso = 3; renderModal();
+        return;
+      }
+
+      if (error.status === 422 || error.status === 400) {
+        deleteTurno(turno.id);
+        alert(detail);
+        ST.paso = 4; renderModal();
+        return;
+      }
+
+     if (!error.status || error.status >= 500) {
+        console.warn('No se pudo enviar la reserva al servidor:', error);
+        alert('Turno guardado localmente, pero no se pudo sincronizar al servidor. Verificá tu conexión y volvé a cargar la página.');
+        renderConfirm(turno, svc, nombre);
+        return;
+      }
+
+      deleteTurno(turno.id);
+      alert(detail);
+      ST.paso = 4; renderModal();
+      return;
+    }
+  }
+
+  function renderConfirm(turno, svc, nombre) {
+    document.getElementById('stepper').style.display  = 'none';
+    document.getElementById('modalFtr').style.display = 'none';
+    const primer  = nombre.split(' ')[0];
+    const noNum   = 'B-' + String(100 + getTurnos().length).padStart(3,'0');
+    const waMsg   = encodeURIComponent(`Hola Kingdom Barber Shop, reservé un turno online:\n📋 *${svc.nombre}*\n📅
+  ${dateLabel(turno.fecha)} a las ${turno.hora}\n👤 ${nombre}\n📞 ${turno.tel}${turno.nota ? '\n📝 '+turno.nota : ''}`);
+    const waUrl   = `https://wa.me/${CFG.negocio.whatsapp}?text=${waMsg}`;
+    document.getElementById('modalBody').innerHTML = `
+      <div class="confirm">
+        <div class="confirm-icon">✓</div>
+        <h3>¡Listo, ${primer}!</h3>
+        <p>Tu turno quedó registrado. Te esperamos en el salón.</p>
+        <div class="bk-ticket">
+          <p class="bk-no">Reserva ${noNum}</p>
+          <p class="bk-svc">${svc.nombre}</p>
+          <div class="bk-row"><span>Fecha</span><strong>${dateLabel(turno.fecha)}</strong></div>
+          <div class="bk-row"><span>Hora</span><strong>${turno.hora}</strong></div>
+          <div class="bk-row"><span>Duración</span><strong>${svc.dur} min</strong></div>
+          <div class="bk-row"><span>Total estimado</span><strong>${fmtGs(svc.precio)}</strong></div>
+        </div>
+        <a class="wa-btn" href="${waUrl}" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472
+  14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94
+  1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.1
+  3-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-
+  .242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462
+  1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085
+  1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0
+  01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884
+  2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815
+  11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0
+  005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Confirmar por WhatsApp
+        </a>
+        <button class="btn btn-ghost" style="width:100%" onclick="closeModal()">Cerrar</button>
+      </div>`;
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+  </body>
+  </html>
