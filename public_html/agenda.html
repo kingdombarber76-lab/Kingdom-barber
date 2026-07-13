@@ -1,73 +1,332 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#faf9f6">
-<meta name="robots" content="noindex,nofollow">
-<title>Agenda — Fabián Quintana Salón Masculino</title>
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
+● <!DOCTYPE html>
+  <html lang="es">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#faf9f6">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Agenda — Kingdom Barber Shop</title>
+  <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
 
-<!-- Copiado desde public/agenda.html para cPanel docroot -->
-
-<div class="login-screen" id="loginScreen">
-  <div class="login-card">
-    <span class="brand-name">Fabián Quintana</span>
-    <span class="brand-sub">Salón Masculino — Agenda</span>
-    <h2>Acceso Personal</h2>
-    <p>Ingresá tu PIN para ver y gestionar los turnos del día.</p>
-    <input class="pin-input" type="password" id="pinInput" maxlength="6" placeholder="· · · ·" inputmode="numeric" autocomplete="off">
-    <span class="pin-error" id="pinError"></span>
-    <button class="btn btn-dark" style="width:100%;padding:13px;margin-bottom:12px" onclick="verificarPin()">Ingresar</button>
-    <a href="index.html" style="font-size:.76rem;color:var(--ink3);text-decoration:underline">← Volver al sitio</a>
+  <!-- ════════════════════════════════════
+     PANTALLA DE LOGIN
+  ════════════════════════════════════ -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <span class="brand-name">Kingdom Barber Shop</span>
+      <span class="brand-sub">Barbería — Agenda</span>
+      <h2>Acceso Personal</h2>
+      <p>Ingresá tu PIN para ver y gestionar los turnos del día.</p>
+      <input class="pin-input" type="password" id="pinInput" maxlength="6" placeholder="· · · ·" inputmode="numeric"
+  autocomplete="off">
+      <span class="pin-error" id="pinError"></span>
+      <button class="btn btn-dark" style="width:100%;padding:13px;margin-bottom:12px"
+  onclick="verificarPin()">Ingresar</button>
+      <a href="index.html" style="font-size:.76rem;color:var(--ink3);text-decoration:underline">← Volver al sitio</a>
+    </div>
   </div>
-</div>
 
-<div id="agendaPanel" style="display:none">
-  <!-- El resto del contenido interactivo (scripts) está en public/config.js -->
-  <header class="hdr">
-    <div class="wrap hdr-inner">
-      <div class="brand">
-        <span class="brand-name">Fabián Quintana</span>
-        <span class="brand-sub">Agenda del Salón</span>
+  <!-- ════════════════════════════════════
+     PANEL DE AGENDA
+  ════════════════════════════════════ -->
+  <div id="agendaPanel" style="display:none">
+
+    <!-- HEADER -->
+    <header class="hdr">
+      <div class="wrap hdr-inner">
+        <div class="brand">
+          <span class="brand-name">Kingdom Barber Shop</span>
+          <span class="brand-sub">Agenda del Salón</span>
+        </div>
+        <div class="hdr-actions" style="gap:10px">
+          <button class="btn btn-ghost btn-sm" onclick="exportCSV()">Exportar CSV</button>
+          <button class="btn btn-outline btn-sm" onclick="cerrarSesion()">Cerrar sesión</button>
+        </div>
       </div>
-      <div class="hdr-actions" style="gap:10px">
-        <button class="btn btn-ghost btn-sm" onclick="exportCSV()">Exportar CSV</button>
-        <button class="btn btn-outline btn-sm" onclick="cerrarSesion()">Cerrar sesión</button>
+    </header>
+
+    <main style="padding-bottom:80px">
+      <div class="wrap" style="padding-top:36px">
+
+    <!-- Encabezado -->
+    <div class="agenda-header">
+      <div>
+        <h1 id="agGreeting">Buenos días</h1>
+        <p class="fecha" id="agFecha"></p>
+      </div>
+      <div class="agenda-actions">
+        <button class="btn btn-dark btn-sm" onclick="abrirModalManual()">+ Agregar turno manual</button>
+        <a href="index.html" class="btn btn-ghost btn-sm">← Sitio público</a>
       </div>
     </div>
-  </header>
 
-  <main style="padding-bottom:80px">
-    <div class="wrap" style="padding-top:36px">
-      <div class="agenda-header">
+    <!-- Stats -->
+    <div class="ag-stats" id="agStats"></div>
+
+    <!-- Tabs + filtros -->
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-tab="hoy"    onclick="cambiarTab(this)">Hoy</button>
+      <button class="tab"        data-tab="manana"  onclick="cambiarTab(this)">Mañana</button>
+      <button class="tab"        data-tab="semana"  onclick="cambiarTab(this)">Esta semana</button>
+      <button class="tab"        data-tab="todos"   onclick="cambiarTab(this)">Todos</button>
+    </div>
+
+    <!-- Lista de turnos -->
+    <div id="agBody"></div>
+
+  </div>
+    </main>
+
+  </div><!-- /#agendaPanel -->
+
+  <!-- ════════════════════════════════════
+     MODAL — Turno manual (barbero)
+  ════════════════════════════════════ -->
+  <div class="overlay" id="overlay" onclick="overlayClick(event)">
+    <div class="modal" id="modal">
+      <div class="modal-hdr">
         <div>
-          <h1 id="agGreeting">Buenos días, Fabián</h1>
-          <p class="fecha" id="agFecha"></p>
+          <p class="modal-eyebrow">Agenda</p>
+          <h3 id="modalTitle">Nuevo Turno</h3>
         </div>
-        <div class="agenda-actions">
-          <button class="btn btn-dark btn-sm" onclick="abrirModalManual()">+ Agregar turno manual</button>
-          <a href="index.html" class="btn btn-ghost btn-sm">← Sitio público</a>
-        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
       </div>
-      <div class="ag-stats" id="agStats"></div>
-      <div class="tabs" id="tabs">
-        <button class="tab active" data-tab="hoy"    onclick="cambiarTab(this)">Hoy</button>
-        <button class="tab"        data-tab="manana"  onclick="cambiarTab(this)">Mañana</button>
-        <button class="tab"        data-tab="semana"  onclick="cambiarTab(this)">Esta semana</button>
-        <button class="tab"        data-tab="todos"   onclick="cambiarTab(this)">Todos</button>
+      <div id="modalBody"></div>
+      <div class="modal-ftr" id="modalFtr">
+        <button class="btn btn-ghost btn-back" onclick="closeModal()">Cancelar</button>
+        <button class="btn btn-dark" onclick="guardarManual()">Guardar Turno</button>
       </div>
-      <div id="agBody"></div>
     </div>
-  </main>
+  </div>
 
-</div>
+  <script src="config.js"></script>
+ <script>
+  /* ─── LOGIN ─── */
+  document.getElementById('pinInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') verificarPin();
+  });
 
-<script src="config.js"></script>
-<script>
-/* The interactive agenda scripts are loaded from config.js in the repo root. */
-</script>
-</body>
-</html>
+  function verificarPin() {
+    const val = document.getElementById('pinInput').value.trim();
+    if (val === CFG.pin) {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('agendaPanel').style.display = 'block';
+      initAgenda();
+    } else {
+      document.getElementById('pinError').textContent = 'PIN incorrecto. Intentá de nuevo.';
+      document.getElementById('pinInput').value = '';
+      document.getElementById('pinInput').focus();
+    }
+  }
+  function cerrarSesion() {
+    document.getElementById('agendaPanel').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('pinInput').value = '';
+    document.getElementById('pinError').textContent = '';
+  }
+
+  /* ─── INIT ─── */
+  let tabActual = 'hoy';
+
+  async function initAgenda() {
+    await Promise.all([syncRemoteTurnos(), loadServices()]);
+    const ahora = new Date();
+    const hora  = ahora.getHours();
+    const greet = hora < 13 ? 'Buenos días' : hora < 20 ? 'Buenas tardes' : 'Buenas noches';
+    document.getElementById('agGreeting').textContent = greet;
+    document.getElementById('agFecha').textContent = capitalize(DIAS[ahora.getDay()]) + ' ' + ahora.getDate() + ' de ' + MESES[ahora.getMonth()] + ' ' + ahora.getFullYear();
+    renderStats();
+    renderAgenda();
+  }
+
+  /* ─── STATS ─── */
+  function renderStats() {
+    const ts   = getTurnos();
+    const hoy  = hoyIso();
+    const mañ  = isoDate(new Date(fromIso(hoy).getTime() + 86400000));
+    const now  = new Date(); now.setHours(0,0,0,0);
+
+    const actHoy   = ts.filter(t => t.fecha === hoy && t.estado !== 'cancelado').length;
+    const pendHoy  = ts.filter(t => t.fecha === hoy && t.estado === 'pendiente').length;
+    const semana   = ts.filter(t => { const d=fromIso(t.fecha); const dif=(d-now)/(1000*60*60*24); return dif>=0 && dif<7 && t.estado!=='cancelado'; }).length;
+    const total    = ts.filter(t => t.estado !== 'cancelado').length;
+
+    document.getElementById('agStats').innerHTML = `
+      <div class="ag-stat"><strong>${actHoy}</strong><span>Turnos hoy</span></div>
+      <div class="ag-stat"><strong>${pendHoy}</strong><span>Pendientes hoy</span></div>
+      <div class="ag-stat"><strong>${semana}</strong><span>Esta semana</span></div>
+      <div class="ag-stat"><strong>${total}</strong><span>Total registrados</span></div>`;
+  }
+
+  /* ─── TABS ─── */
+  function cambiarTab(btn) {
+    tabActual = btn.dataset.tab;
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderAgenda();
+  }
+
+  /* ─── RENDER AGENDA ─── */
+  function renderAgenda() {
+    renderStats();
+    const body = document.getElementById('agBody');
+    body.innerHTML = '';
+
+    const ts  = getTurnos().sort((a,b) => a.fecha===b.fecha ? hm2min(a.hora)-hm2min(b.hora) : a.fecha<b.fecha?-1:1);
+    const hoy = hoyIso();
+    const mañ = isoDate(new Date(fromIso(hoy).getTime() + 86400000));
+    const now = new Date(); now.setHours(0,0,0,0);
+
+    let filtrado = ts;
+    if      (tabActual === 'hoy')    filtrado = ts.filter(t => t.fecha === hoy);
+    else if (tabActual === 'manana') filtrado = ts.filter(t => t.fecha === mañ);
+    else if (tabActual === 'semana') filtrado = ts.filter(t => { const d=fromIso(t.fecha); const dif=(d-now)/(1000*60*60*24); return dif>=0 && dif<7; });
+
+    if (!filtrado.length) {
+      body.innerHTML = '<div class="empty-agenda"><strong>Sin turnos en este período</strong>Las reservas de clientes aparecerán aquí automáticamente.</div>';
+      return;
+    }
+
+    const grupos = {};
+    filtrado.forEach(t => { if (!grupos[t.fecha]) grupos[t.fecha] = []; grupos[t.fecha].push(t); });
+    Object.keys(grupos).sort().forEach(fecha => {
+      const grp = document.createElement('div'); grp.className = 'day-group';
+      grp.innerHTML = `<div class="day-title">${dateLabel(fecha)}${fecha===hoy?'<span class="today-tag">Hoy</span>':''}</div>`;
+      grupos[fecha].forEach(t => grp.appendChild(buildTurnoCard(t)));
+      body.appendChild(grp);
+    });
+  }
+
+  function buildTurnoCard(t) {
+    const svc  = getSvc(t.svcId);
+    const card = document.createElement('div');
+    card.className = 'turno-card' + (t.estado === 'cancelado' ? ' cancelado' : '');
+    card.id = 'tc-' + t.id;
+
+    const sbClass = { pendiente:'sb-pendiente', confirmado:'sb-confirmado', atendido:'sb-atendido', cancelado:'sb-cancelado' }[t.estado] || 'sb-pendiente';
+    const telLimpio = t.tel.replace(/\D/g,'');
+    const waMsg = encodeURIComponent(`Hola ${t.nombre.split(' ')[0]}, te confirmamos tu turno en Kingdom Barber Shop:\n📋 *${svc.nombre}*\n📅 ${dateLabel(t.fecha)} a las ${t.hora}\n¡Te esperamos!`);
+
+    card.innerHTML = `
+      <div class="tc-time"><strong>${t.hora}</strong><span>${t.dur}min</span></div>
+      <div class="tc-body">
+        <div class="tc-name">${t.nombre}</div>
+        <div class="tc-service">${svc.nombre} · ${fmtGs(svc.precio)}</div>
+        ${t.nota ? `<div class="tc-notes">📝 ${t.nota}</div>` : ''}
+        <div class="tc-links">
+          <a href="tel:${t.tel}">📞 ${t.tel}</a>
+          <a href="https://wa.me/${telLimpio}?text=${waMsg}" target="_blank" rel="noopener">💬 WhatsApp</a>
+        </div>
+      </div>
+      <div class="tc-actions">
+        <span class="status-badge ${sbClass}">${t.estado}</span>
+        <div class="tc-btns">${buildBtns(t)}</div>
+      </div>`;
+    return card;
+  }
+
+  function buildBtns(t) {
+    if (t.estado === 'cancelado')
+      return `<button class="btn btn-ghost btn-sm" onclick="eliminar('${t.id}')">Eliminar</button>`;
+    let b = '';
+    if (t.estado === 'pendiente')
+      b += `<button class="btn btn-ghost btn-sm" onclick="cambiarEstado('${t.id}','confirmado')">Confirmar</button>`;
+    if (t.estado !== 'atendido')
+      b += `<button class="btn btn-ghost btn-sm" onclick="cambiarEstado('${t.id}','atendido')">Atendido</button>`;
+    b += `<button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:#e8b4b4" onclick="cancelar('${t.id}')">Cancelar</button>`;
+    return b;
+  }
+
+  async function cambiarEstado(id, estado) { await updateTurno(id, { estado }); renderAgenda(); }
+  async function cancelar(id) { if (confirm('¿Cancelar este turno?')) { await updateTurno(id, { estado:'cancelado' }); renderAgenda(); } }
+  async function eliminar(id) { if (confirm('¿Eliminar permanentemente?')) { await deleteTurno(id); renderAgenda(); } }
+
+  /* ─── MODAL MANUAL ─── */
+  function abrirModalManual() {
+    document.getElementById('modalTitle').textContent = 'Nuevo Turno Manual';
+    document.getElementById('overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    const svcOpts = CFG.servicios.map(s => `<option value="${s.id}">${s.nombre} (${s.dur}min)</option>`).join('');
+    document.getElementById('modalBody').innerHTML = `
+      <div class="field"><label>Nombre del cliente *</label><input id="mNombre" type="text" placeholder="Nombre completo"></div>
+      <div class="field-row">
+        <div class="field"><label>Teléfono</label><input id="mTel" type="tel" placeholder="0981 ..."></div>
+      </div>
+      <div class="field"><label>Servicio *</label>
+        <select id="mSvc" style="border:1px solid var(--line);border-radius:var(--r);padding:11px 14px;font-family:var(--sans);font-size:.9rem;color:var(--ink);background:var(--white)">${svcOpts}</select>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Fecha *</label><input id="mFecha" type="date" min="${hoyIso()}"></div>
+        <div class="field" id="mHoraWrap"><label>Hora *</label><select id="mHora" style="border:1px solid var(--line);border-radius:var(--r);padding:11px 14px;font-family:var(--sans);font-size:.9rem;color:var(--ink);background:var(--white)"><option value="">— elegí fecha primero —</option></select></div>
+      </div>
+      <div class="field"><label>Nota (opcional)</label><textarea id="mNota" placeholder="Observaciones…"></textarea></div>`;
+    document.getElementById('mFecha').value = hoyIso();
+    document.getElementById('mSvc').addEventListener('change', actualizarHorasManual);
+    document.getElementById('mFecha').addEventListener('change', actualizarHorasManual);
+    actualizarHorasManual();
+  }
+
+  function actualizarHorasManual() {
+    const svcId = document.getElementById('mSvc').value;
+    const fecha = document.getElementById('mFecha').value;
+    const svc   = getSvc(svcId);
+    const sel   = document.getElementById('mHora');
+    if (!fecha) { sel.innerHTML = '<option value="">— elegí fecha primero —</option>'; return; }
+    const horas = horasDisponibles(fecha, svc.dur);
+    sel.innerHTML = horas.length
+      ? horas.map(h=>`<option value="${h}">${h}</option>`).join('')
+      : '<option value="">Sin disponibilidad ese día</option>';
+  }
+
+  async function guardarManual() {
+    const nombre = document.getElementById('mNombre').value.trim();
+    const tel    = document.getElementById('mTel').value.trim();
+    const svcId  = document.getElementById('mSvc').value;
+    const fecha  = document.getElementById('mFecha').value;
+    const hora   = document.getElementById('mHora').value;
+    const nota   = document.getElementById('mNota').value.trim();
+    if (!nombre || !fecha || !hora) { alert('Completá los campos obligatorios.'); return; }
+    const svc = getSvc(svcId);
+    if (!slotDisponible(fecha, hm2min(hora), svc.dur)) { alert('Ese horario no está disponible.'); return; }
+
+    const turno = { id:uid(), svcId, nombre, tel, nota, fecha, hora, dur:svc.dur, estado:'confirmado', creadoEn:new Date().toISOString() };
+    try {
+      const remote = await createRemoteTurno(turno);
+      addTurno(remote);
+      closeModal();
+      renderAgenda();
+    } catch (error) {
+      console.error('No se pudo guardar el turno remoto:', error);
+      alert('No se pudo guardar el turno en el servidor. Intentá de nuevo.');
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function overlayClick(e) { if (e.target.id === 'overlay') closeModal(); }
+
+  /* ─── EXPORTAR CSV ─── */
+  function exportCSV() {
+    const ts = getTurnos();
+    if (!ts.length) { alert('No hay turnos para exportar.'); return; }
+    const header = 'ID,Nombre,Teléfono,Servicio,Fecha,Hora,Duración(min),Precio(Gs),Estado,Nota,CreadoEn';
+    const rows = ts.map(t => {
+      const svc = getSvc(t.svcId);
+      return [t.id,t.nombre,t.tel,svc.nombre,t.fecha,t.hora,t.dur,svc.precio,t.estado,t.nota||'',t.creadoEn||'']
+        .map(v => `"${String(v).replace(/"/g,'""')}"`)
+        .join(',');
+    });
+    const csv = [header,...rows].join('\n');
+    const a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(csv);
+    a.download = `turnos-kingdom-barber-${hoyIso()}.csv`;
+    a.click();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
