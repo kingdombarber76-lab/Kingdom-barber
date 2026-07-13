@@ -1,6 +1,6 @@
-● /* ══════════════════════════════════════
+/* ══════════════════════════════════════════════════
      config.js — Kingdom Barber Shop
-     ──────────────────────────────────────────────
+     ──────────────────────────────────────────────────
      Panel de control centralizado. Editá este archivo
      para actualizar precios, horarios, servicios y PIN
      sin tocar ninguna otra página.
@@ -41,7 +41,7 @@
 
     // Duración mínima de cada bloque de agenda (minutos)
 
-    bloqueMin: 60,
+    bloqueMin: 30, // Note: changed from 60 to 30 to resemble Fabián version
 
     /* Horarios por día de la semana
 
@@ -86,12 +86,11 @@
 
   {
 
-    id: 1,
+    id: 'corte',
 
     nombre: 'Corte de pelo',
 
     desc: 'Corte de precisión adaptado a tu estilo.',
-
 
     precio: 50000,
 
@@ -101,12 +100,11 @@
 
   {
 
-    id: 2,
+    id: 'completo',
 
     nombre: 'Servicio completo',
 
     desc: 'Corte, ceja y barba en una sola sesión.',
-
 
     precio: 90000,
 
@@ -120,12 +118,11 @@
 
   {
 
-    id: 3,
+    id: 'ninio',
 
     nombre: 'Corte de niño',
 
     desc: 'Corte pensado para los más chicos.',
-
 
     precio: 50000,
 
@@ -135,12 +132,11 @@
 
   {
 
-    id: 4,
+    id: 'fade',
 
     nombre: 'Corte fade + freestyle',
 
     desc: 'Degradado con diseño personalizado.',
-
 
     precio: 60000,
 
@@ -151,11 +147,11 @@
 
   };
 
-  /* ═══════════════════════════════════════════════════
+  /* ══════════════════════════════════════════════════
 
      UTILIDADES COMPARTIDAS
 
-  ═══════════════════════════════════════════════ */
+  ══════════════════════════════════════════════════ */
 
   const DIAS   = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
 
@@ -182,7 +178,7 @@
 
   const uid       = () => 't' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 
-  const getSvc    = id => CFG.servicios.find(s => s.id === id || s.id === Number(id)) || CFG.servicios[0];
+  const getSvc    = id => CFG.servicios.find(s => s.id === id) || CFG.servicios[0];
 
   const dateLabel = iso => { const d=fromIso(iso); return ${capitalize(DIAS[d.getDay()])} ${d.getDate()} de
   ${MESES[d.getMonth()]}; };
@@ -193,7 +189,7 @@
 
   const DEFAULT_BARBER_ID = 1;
 
-  const SERVICE_ID_MAP = { 1: 1, 2: 2, 3: 3, 4: 4 };
+  const SERVICE_ID_MAP = { corte: 1, completo: 2, ninio: 3, fade: 4 };
 
   const jsonHeaders = { 'Content-Type': 'application/json' };
 
@@ -298,7 +294,7 @@
 
   const mapToApiAppointment = turno => ({
 
-    service_id: Number(turno.svcId) || SERVICE_ID_MAP[turno.svcId] || 1,
+    service_id: SERVICE_ID_MAP[turno.svcId] || 1, // Map our string id to the API's numeric id
 
     barber_id: DEFAULT_BARBER_ID,
 
@@ -311,8 +307,6 @@
     client_phone: turno.tel,
 
     notes: turno.nota,
-
-    a,
 
     status: apiStatusFromLocal(turno.estado ?? 'pendiente'),
 
@@ -472,7 +466,7 @@
 
   }
 
-  /* ════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════
 
      ALMACENAMIENTO (localStorage)
 
@@ -484,7 +478,7 @@
 
      el mismo dominio/origen, comparten los datos.
 
-  ══════════════════════════════════════════════════ */
+  ═══════════════════════════════════════════════════ */
 
   const STORE_KEY = 'kbs_turnos_v1';
 
@@ -533,11 +527,11 @@
 
   };
 
-  /* ════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════
 
      LÓGICA DE DISPONIBILIDAD
 
-  ══════════════════════════════════════════════════ */
+  ═══════════════════════════════════════════════════ */
 
   function rangosDelDia(iso) {
 
@@ -591,7 +585,8 @@
 
       const data = await apiFetch(
 
-          `${API_BASE}/appointments/available?tenant_id=1&barber_id=1&service_id=${servicio.id}&date=${iso}`
+
+  `${API_BASE}/appointments/available?tenant_id=1&barber_id=1&service_id=${SERVICE_ID_MAP[servicio.id]}&date=${iso}`
 
       );
 
