@@ -182,7 +182,7 @@
 
   const dateShort  = iso => { const d=fromIso(iso); return `${DIAS_C[d.getDay()]}${d.getDate()}`; };
 
-  const API_BASE = 'https://kingdombarber-8x9bs.sevalla.app/';
+  const API_BASE = 'https://kingdombarber-8x9bs.sevalla.app/api';
 
   const DEFAULT_BARBER_ID = 1;
 
