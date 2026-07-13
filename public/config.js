@@ -472,28 +472,18 @@ const deleteRemoteAppointment = async id => {
 
   const addTurno   = t     => { const ts=getTurnos(); ts.push(t); saveTurnos(ts); };
 
-  const updateTurno= async (id,ch)=> {
-
-    const ts = getTurnos();
-
-    const i = ts.findIndex(t => t.id === id);
-
-    if (i < 0) return;
-
-    ts[i] = { ...ts[i], ...ch };
-
-    saveTurnos(ts);
-
-    if (id && !id.startsWith('t') && ch.estado) {
-
-  updateRemoteAppointmentStatus(id, ch.estado).catch(error => {
-
-    console.warn('No se pudo actualizar el turno remoto:', error);
-
-  });
-    }
-
-  };
+const updateTurno= async (id,ch)=> {
+  const ts = getTurnos();
+  const i = ts.findIndex(t => t.id === id);
+  if (i < 0) return;
+  ts[i] = { ...ts[i], ...ch };
+  saveTurnos(ts);
+  if (id && !id.startsWith('t') && ch.estado) {
+    updateRemoteAppointmentStatus(id, apiStatusFromLocal(ch.estado)).catch(error => {
+      console.warn('No se pudo actualizar el turno remoto:', error);
+    });
+  }
+};
 
   const deleteTurno= async id => {
 
